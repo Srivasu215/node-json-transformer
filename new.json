@@ -1,0 +1,2292 @@
+[
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a859",
+        "voucherType": "Sales/CA",
+        "party": "Cash",
+        "voucherNumber": 1,
+        "reference": "CA/1",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174169,
+        "voucherKey": 198049531953171,
+        "amount": -6220.89,
+        "items": [
+            {
+                "stockItem": "Shading Net Kgs",
+                "rate": "280.90/kgs",
+                "amount": 1280.9,
+                "actualQty": "4.560 kgs",
+                "billedQty": "4.560 kgs",
+                "batch": {
+                    "batchId": [
+                        4186,
+                        4190
+                    ],
+                    "batchName": [
+                        "Rishi-Rs.205/-",
+                        "Bahnu-Fortune-Rs.178/-"
+                    ],
+                    "godown": [
+                        "Main Location",
+                        "Main Location"
+                    ],
+                    "amount": [
+                        1000,
+                        280.9
+                    ],
+                    "actualQty": [
+                        "3.560 kgs",
+                        "1.000 kgs"
+                    ],
+                    "billedQty": [
+                        "3.560 kgs",
+                        "1.000 kgs"
+                    ],
+                    "batchRate": [
+                        "280.90/kgs",
+                        "280.90/kgs"
+                    ],
+                    "manufacturingDate": [
+                        20210723,
+                        20240509
+                    ]
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 1280.9
+                }
+            },
+            {
+                "stockItem": "ROPE",
+                "rate": "312.50/kgs",
+                "amount": 100,
+                "actualQty": "0.320 kgs",
+                "billedQty": "0.320 kgs",
+                "batch": {
+                    "batchId": 3543,
+                    "batchName": "Tuf-Rs.170",
+                    "godown": "Main Location",
+                    "amount": 100,
+                    "actualQty": "0.320 kgs",
+                    "billedQty": "0.320 kgs",
+                    "batchRate": "312.50/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 100
+                }
+            },
+            {
+                "stockItem": "ROPE",
+                "rate": "259.26/kgs",
+                "amount": 420,
+                "actualQty": "1.620 kgs",
+                "billedQty": "1.620 kgs",
+                "batch": {
+                    "batchId": 3543,
+                    "batchName": "Tuf-Rs.170",
+                    "godown": "Main Location",
+                    "amount": 420,
+                    "actualQty": "1.620 kgs",
+                    "billedQty": "1.620 kgs",
+                    "batchRate": "259.26/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 420
+                }
+            },
+            {
+                "stockItem": "ROPE",
+                "rate": "250.00/kgs",
+                "amount": 200,
+                "actualQty": "0.800 kgs",
+                "billedQty": "0.800 kgs",
+                "batch": {
+                    "batchId": 3543,
+                    "batchName": "Tuf-Rs.170",
+                    "godown": "Main Location",
+                    "amount": 200,
+                    "actualQty": "0.800 kgs",
+                    "billedQty": "0.800 kgs",
+                    "batchRate": "250.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 200
+                }
+            },
+            {
+                "stockItem": "Nylon Cheeses",
+                "rate": "180.00/Nos",
+                "amount": 1440,
+                "actualQty": "8 Nos",
+                "billedQty": "8 Nos",
+                "batch": {
+                    "batchId": 4652,
+                    "batchName": "Kumaran-250gms-Rs.126/-",
+                    "godown": "Main Location",
+                    "amount": 1440,
+                    "actualQty": "8 Nos",
+                    "billedQty": "8 Nos",
+                    "batchRate": "180.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 1440
+                }
+            },
+            {
+                "stockItem": "0.75/90/50",
+                "rate": "430.46/kgs",
+                "amount": 1299.99,
+                "actualQty": "3.020 kgs",
+                "billedQty": "3.020 kgs",
+                "batch": {
+                    "batchId": 2975,
+                    "batchName": "Tri-Rs.273/-",
+                    "godown": "Nalam Godown",
+                    "amount": 1299.99,
+                    "actualQty": "3.020 kgs",
+                    "billedQty": "3.020 kgs",
+                    "batchRate": "430.46/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 1299.99
+                }
+            },
+            {
+                "stockItem": "Export Surplus New",
+                "rate": "576.92/kgs",
+                "amount": 300,
+                "actualQty": "0.520 kgs",
+                "billedQty": "0.520 kgs",
+                "batch": {
+                    "batchId": 4524,
+                    "batchName": "1.20-275/-",
+                    "godown": "Main Location",
+                    "amount": 300,
+                    "actualQty": "0.520 kgs",
+                    "billedQty": "0.520 kgs",
+                    "batchRate": "576.92/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 300
+                }
+            },
+            {
+                "stockItem": "Gloves",
+                "rate": "10.00/Nos",
+                "amount": 100,
+                "actualQty": "10 Nos",
+                "billedQty": "10 Nos",
+                "batch": {
+                    "batchId": 4004,
+                    "batchName": "Blue-RRR-Rs.6/-",
+                    "godown": "Main Location",
+                    "amount": 100,
+                    "actualQty": "10 Nos",
+                    "billedQty": "10 Nos",
+                    "batchRate": "10.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 100
+                }
+            },
+            {
+                "stockItem": "Gloves",
+                "rate": "12.00/Nos",
+                "amount": 240,
+                "actualQty": "20 Nos",
+                "billedQty": "20 Nos",
+                "batch": {
+                    "batchId": 4012,
+                    "batchName": "Blue-60gms-RR-Rs.8.50",
+                    "godown": "Main Location",
+                    "amount": 240,
+                    "actualQty": "20 Nos",
+                    "billedQty": "20 Nos",
+                    "batchRate": "12.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 240
+                }
+            },
+            {
+                "stockItem": "Anchor Gaff Hooks",
+                "rate": "140.00/Nos",
+                "amount": 840,
+                "actualQty": "6 Nos",
+                "billedQty": "6 Nos",
+                "batch": {
+                    "batchId": 4910,
+                    "batchName": "8/0-8mm-Rs.85/-",
+                    "godown": "Main Location",
+                    "amount": 840,
+                    "actualQty": "6 Nos",
+                    "billedQty": "6 Nos",
+                    "batchRate": "140.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 840
+                }
+            }
+        ],
+        "ledger": {
+            "name": "Cash",
+            "amount": -6220.89
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a85a",
+        "voucherType": "Sales/Cr Mani",
+        "party": "Sri Pruthvi Aqua Needs , Nemam",
+        "voucherNumber": 1,
+        "reference": "CR/1",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174170,
+        "voucherKey": 198049531953176,
+        "amount": -9635,
+        "items": [],
+        "ledger": {
+            "name": "Sri Pruthvi Aqua Needs , Nemam",
+            "amount": -9635
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a85b",
+        "voucherType": "Sales/Cr Mani",
+        "party": "Phonepe Business (Axis)",
+        "voucherNumber": 2,
+        "reference": "CR/2",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174171,
+        "voucherKey": 198049531953182,
+        "amount": -1475,
+        "items": [
+            {
+                "stockItem": "Water Proof Tape Mtrs",
+                "rate": "65.00/mtr",
+                "amount": 325,
+                "actualQty": "5.00 mtr",
+                "billedQty": "5.00 mtr",
+                "batch": {
+                    "batchId": 5207,
+                    "batchName": "4\"maruthi-5mtr Roll-Rs32/- Mtr",
+                    "godown": "Main Location",
+                    "amount": 325,
+                    "actualQty": "5.00 mtr",
+                    "billedQty": "5.00 mtr",
+                    "batchRate": "65.00/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 325
+                }
+            },
+            {
+                "stockItem": "PPMF TWINE",
+                "rate": "500.00/kgs",
+                "amount": 160,
+                "actualQty": "0.320 kgs",
+                "billedQty": "0.320 kgs",
+                "batch": {
+                    "batchId": 3533,
+                    "batchName": "1/2-Glon-Rs.325/-",
+                    "godown": "Main Location",
+                    "amount": 160,
+                    "actualQty": "0.320 kgs",
+                    "billedQty": "0.320 kgs",
+                    "batchRate": "500.00/kgs",
+                    "manufacturingDate": 20231031
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 160
+                }
+            },
+            {
+                "stockItem": "Shading Net Kgs",
+                "rate": "333.33/kgs",
+                "amount": 500,
+                "actualQty": "1.500 kgs",
+                "billedQty": "1.500 kgs",
+                "batch": {
+                    "batchId": 4186,
+                    "batchName": "Rishi-Rs.205/-",
+                    "godown": "Main Location",
+                    "amount": 500,
+                    "actualQty": "1.500 kgs",
+                    "billedQty": "1.500 kgs",
+                    "batchRate": "333.33/kgs",
+                    "manufacturingDate": 20210723
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 500
+                }
+            },
+            {
+                "stockItem": "GD Connected",
+                "rate": "586.21/kgs",
+                "amount": 170,
+                "actualQty": "0.290 kgs",
+                "billedQty": "0.290 kgs",
+                "batch": {
+                    "batchId": 4932,
+                    "batchName": "Conn-Rs.370/-",
+                    "godown": "Main Location",
+                    "amount": 170,
+                    "actualQty": "0.290 kgs",
+                    "billedQty": "0.290 kgs",
+                    "batchRate": "586.21/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 170
+                }
+            },
+            {
+                "stockItem": "NYLON",
+                "rate": "608.70/kgs",
+                "amount": 140,
+                "actualQty": "0.230 kgs",
+                "billedQty": "0.230 kgs",
+                "batch": {
+                    "batchId": 3515,
+                    "batchName": "Dyed-Kk-Rs.455/-",
+                    "godown": "Main Location",
+                    "amount": 140,
+                    "actualQty": "0.230 kgs",
+                    "billedQty": "0.230 kgs",
+                    "batchRate": "608.70/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 140
+                }
+            },
+            {
+                "stockItem": "ROPE",
+                "rate": "260.87/kgs",
+                "amount": 180,
+                "actualQty": "0.690 kgs",
+                "billedQty": "0.690 kgs",
+                "batch": {
+                    "batchId": 3543,
+                    "batchName": "Tuf-Rs.170",
+                    "godown": "Main Location",
+                    "amount": 180,
+                    "actualQty": "0.690 kgs",
+                    "billedQty": "0.690 kgs",
+                    "batchRate": "260.87/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 180
+                }
+            }
+        ],
+        "ledger": {
+            "name": "Phonepe Business (Axis)",
+            "amount": -1475
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a85d",
+        "voucherType": "Sales/E",
+        "party": "Nekkanti Sea Foods Ltd, Peddapudi",
+        "voucherNumber": 1,
+        "reference": "E/1",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174173,
+        "voucherKey": 198049531953188,
+        "amount": -2700,
+        "items": [],
+        "ledger": {
+            "name": "Nekkanti Sea Foods Ltd, Peddapudi",
+            "amount": -2700
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a85e",
+        "voucherType": "Sales/slip",
+        "party": "Koda Ramana (Pudimadaka)",
+        "voucherNumber": 1,
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174174,
+        "voucherKey": 198049531953190,
+        "amount": -18125,
+        "items": [],
+        "ledger": {
+            "name": "Koda Ramana (Pudimadaka)",
+            "amount": -18125
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a861",
+        "voucherType": "Sales/CA",
+        "party": "Cash",
+        "voucherNumber": 2,
+        "reference": "CA/2",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174177,
+        "voucherKey": 198049531953200,
+        "amount": -1430,
+        "items": [],
+        "ledger": {
+            "name": "Cash",
+            "amount": -1430
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a863",
+        "voucherType": "Sales/Cr Mani",
+        "party": "Suryanarayana Side Tailor",
+        "voucherNumber": 3,
+        "reference": "CR/3",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174179,
+        "voucherKey": 198049531953206,
+        "amount": -5520,
+        "items": [
+            {
+                "stockItem": "Rose Knitted Fabric Mtrs",
+                "rate": "23.00/mtr",
+                "amount": 2760,
+                "actualQty": "120.00 mtr",
+                "billedQty": "120.00 mtr",
+                "batch": {
+                    "batchId": 5272,
+                    "batchName": "Rose-RK-Rs.17.25",
+                    "godown": "Main Location",
+                    "amount": 2760,
+                    "actualQty": "120.00 mtr",
+                    "billedQty": "120.00 mtr",
+                    "batchRate": "23.00/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 2760
+                }
+            },
+            {
+                "stockItem": "Rose Knitted Fabric Mtrs",
+                "rate": "23.00/mtr",
+                "amount": 2760,
+                "actualQty": "120.00 mtr",
+                "billedQty": "120.00 mtr",
+                "batch": {
+                    "batchId": 5272,
+                    "batchName": "Rose-RK-Rs.17.25",
+                    "godown": "Main Location",
+                    "amount": 2760,
+                    "actualQty": "120.00 mtr",
+                    "billedQty": "120.00 mtr",
+                    "batchRate": "23.00/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 2760
+                }
+            }
+        ],
+        "ledger": {
+            "name": "Suryanarayana Side Tailor",
+            "amount": -5520
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a868",
+        "voucherType": "Sales/Cr Mani",
+        "party": "P.Koya Raju",
+        "voucherNumber": 4,
+        "reference": "CR/4",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174184,
+        "voucherKey": 198049531953212,
+        "amount": -9860,
+        "items": [
+            {
+                "stockItem": "Superline Connected",
+                "rate": "650.08/kgs",
+                "amount": 3920,
+                "actualQty": "6.030 kgs",
+                "billedQty": "6.030 kgs",
+                "batch": {
+                    "batchId": 4674,
+                    "batchName": "1.30-Wh-5*200-Rs.515/-",
+                    "godown": "Main Location",
+                    "amount": 3920,
+                    "actualQty": "6.030 kgs",
+                    "billedQty": "6.030 kgs",
+                    "batchRate": "650.08/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 3920
+                }
+            },
+            {
+                "stockItem": "Gloves",
+                "rate": "12.00/Nos",
+                "amount": 360,
+                "actualQty": "30 Nos",
+                "billedQty": "30 Nos",
+                "batch": {
+                    "batchId": 4012,
+                    "batchName": "Blue-60gms-RR-Rs.8.50",
+                    "godown": "Main Location",
+                    "amount": 360,
+                    "actualQty": "30 Nos",
+                    "billedQty": "30 Nos",
+                    "batchRate": "12.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 360
+                }
+            },
+            {
+                "stockItem": "Nylon Cheeses",
+                "rate": "180.00/Nos",
+                "amount": 180,
+                "actualQty": "1 Nos",
+                "billedQty": "1 Nos",
+                "batch": {
+                    "batchId": 4649,
+                    "batchName": "Shyamlon-Rs.104/-",
+                    "godown": "Main Location",
+                    "amount": 180,
+                    "actualQty": "1 Nos",
+                    "billedQty": "1 Nos",
+                    "batchRate": "180.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 180
+                }
+            },
+            {
+                "stockItem": "Y- 12cm",
+                "rate": "120.00/Nos",
+                "amount": 2400,
+                "actualQty": "20 Nos",
+                "billedQty": "20 Nos",
+                "batch": {
+                    "batchId": 4813,
+                    "batchName": "09.03.26-Rs.66/-",
+                    "godown": "Main Location",
+                    "amount": 2400,
+                    "actualQty": "20 Nos",
+                    "billedQty": "20 Nos",
+                    "batchRate": "120.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 2400
+                }
+            },
+            {
+                "stockItem": "Viaadi Hooks",
+                "rate": "7.50/Nos",
+                "amount": 3000,
+                "actualQty": "400 Nos",
+                "billedQty": "400 Nos",
+                "batch": {
+                    "batchId": 4077,
+                    "batchName": "4-Rs.4960/-",
+                    "godown": "Main Location",
+                    "amount": 3000,
+                    "actualQty": "400 Nos",
+                    "billedQty": "400 Nos",
+                    "batchRate": "7.50/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 3000
+                }
+            }
+        ],
+        "ledger": {
+            "name": "P.Koya Raju",
+            "amount": -9860
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a864",
+        "voucherType": "Sales/E",
+        "party": "M S Swaminathan Research Foundation",
+        "voucherNumber": 2,
+        "reference": "E/2",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174180,
+        "voucherKey": 198049531953216,
+        "amount": -1330,
+        "items": [
+            {
+                "stockItem": "TRAYS",
+                "rate": "525.00/Nos",
+                "amount": 1050,
+                "actualQty": "2 Nos",
+                "billedQty": "2 Nos",
+                "batch": {
+                    "batchId": 4223,
+                    "batchName": "Holenet-1.60kgs-Rs.265/-",
+                    "godown": "Stairs Godown",
+                    "amount": 1050,
+                    "actualQty": "2 Nos",
+                    "billedQty": "2 Nos",
+                    "batchRate": "525.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 1050
+                }
+            },
+            {
+                "stockItem": "Water Proof Tape Mtrs",
+                "rate": "36.00/mtr",
+                "amount": 180,
+                "actualQty": "5.00 mtr",
+                "billedQty": "5.00 mtr",
+                "batch": {
+                    "batchId": 5206,
+                    "batchName": "Maruthi-2\"-5mtr Roll-Rs.16/- Mtr",
+                    "godown": "Main Location",
+                    "amount": 180,
+                    "actualQty": "5.00 mtr",
+                    "billedQty": "5.00 mtr",
+                    "batchRate": "36.00/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 180
+                }
+            },
+            {
+                "stockItem": "F.LINE PKTS",
+                "rate": "50.00/Nos",
+                "amount": 100,
+                "actualQty": "2 Nos",
+                "billedQty": "2 Nos",
+                "batch": {
+                    "batchId": 3398,
+                    "batchName": "0.90-Gd-Rs.17.27-Rs.28/-",
+                    "godown": "Main Location",
+                    "amount": 100,
+                    "actualQty": "2 Nos",
+                    "billedQty": "2 Nos",
+                    "batchRate": "50.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 100
+                }
+            }
+        ],
+        "ledger": {
+            "name": "M S Swaminathan Research Foundation",
+            "amount": -1330
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a866",
+        "voucherType": "Sales/slip",
+        "party": "JDG Seafood (Akula Durga Prasad)",
+        "voucherNumber": 2,
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174182,
+        "voucherKey": 198049531953224,
+        "amount": -1000,
+        "items": [],
+        "ledger": {
+            "name": "JDG Seafood (Akula Durga Prasad)",
+            "amount": -1000
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a869",
+        "voucherType": "Sales/Cr Mani",
+        "party": "Phone Pe Sale",
+        "voucherNumber": 5,
+        "reference": "CR/5",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174185,
+        "voucherKey": 198049531953240,
+        "amount": -330,
+        "items": [],
+        "ledger": {
+            "name": "Phone Pe Sale",
+            "amount": -330
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a86b",
+        "voucherType": "Sales/E",
+        "party": "Vaisakhi Bio Marine Farms,Addaripeta",
+        "voucherNumber": 3,
+        "reference": "E/3",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174187,
+        "voucherKey": 198049531953258,
+        "amount": -150275,
+        "items": [
+            {
+                "stockItem": "0.50 Mono Red",
+                "rate": "380.00/kgs",
+                "amount": 78078.6,
+                "actualQty": "205.470 kgs",
+                "billedQty": "205.470 kgs",
+                "batch": {
+                    "batchId": [
+                        3894,
+                        3895
+                    ],
+                    "batchName": [
+                        "Sfil-Rs.282/-",
+                        "Sfil-Rs.295/-"
+                    ],
+                    "godown": [
+                        "Main Location",
+                        "Main Location"
+                    ],
+                    "amount": [
+                        2025.4,
+                        76053.2
+                    ],
+                    "actualQty": [
+                        "5.330 kgs",
+                        "200.140 kgs"
+                    ],
+                    "billedQty": [
+                        "5.330 kgs",
+                        "200.140 kgs"
+                    ],
+                    "batchRate": [
+                        "380.00/kgs",
+                        "380.00/kgs"
+                    ],
+                    "manufacturingDate": [
+                        "",
+                        ""
+                    ]
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 78078.6
+                }
+            },
+            {
+                "stockItem": "3.50 Blk",
+                "rate": "360.00/kgs",
+                "amount": 14486.4,
+                "actualQty": "40.240 kgs",
+                "billedQty": "40.240 kgs",
+                "batch": {
+                    "batchId": 4159,
+                    "batchName": "Sfil-Rs.295/-",
+                    "godown": "Main Location",
+                    "amount": 14486.4,
+                    "actualQty": "40.240 kgs",
+                    "billedQty": "40.240 kgs",
+                    "batchRate": "360.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 14486.4
+                }
+            },
+            {
+                "stockItem": "3.50 White F.Line",
+                "rate": "470.00/kgs",
+                "amount": 9794.8,
+                "actualQty": "20.840 kgs",
+                "billedQty": "20.840 kgs",
+                "batch": {
+                    "batchId": 3253,
+                    "batchName": "Gd-Rs.250/-",
+                    "godown": "Main Location",
+                    "amount": 9794.8,
+                    "actualQty": "20.840 kgs",
+                    "billedQty": "20.840 kgs",
+                    "batchRate": "470.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 9794.8
+                }
+            },
+            {
+                "stockItem": "Export Surplus New",
+                "rate": "500.00/kgs",
+                "amount": 5235,
+                "actualQty": "10.470 kgs",
+                "billedQty": "10.470 kgs",
+                "batch": {
+                    "batchId": 4539,
+                    "batchName": "1.80-Rs.335/-",
+                    "godown": "Main Location",
+                    "amount": 5235,
+                    "actualQty": "10.470 kgs",
+                    "billedQty": "10.470 kgs",
+                    "batchRate": "500.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 5235
+                }
+            },
+            {
+                "stockItem": "ROPE",
+                "rate": "260.00/kgs",
+                "amount": 2691,
+                "actualQty": "10.350 kgs",
+                "billedQty": "10.350 kgs",
+                "batch": {
+                    "batchId": 3543,
+                    "batchName": "Tuf-Rs.170",
+                    "godown": "Main Location",
+                    "amount": 2691,
+                    "actualQty": "10.350 kgs",
+                    "billedQty": "10.350 kgs",
+                    "batchRate": "260.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 2691
+                }
+            },
+            {
+                "stockItem": "ROPE",
+                "rate": "250.00/kgs",
+                "amount": 3675,
+                "actualQty": "14.700 kgs",
+                "billedQty": "14.700 kgs",
+                "batch": {
+                    "batchId": 3543,
+                    "batchName": "Tuf-Rs.170",
+                    "godown": "Main Location",
+                    "amount": 3675,
+                    "actualQty": "14.700 kgs",
+                    "billedQty": "14.700 kgs",
+                    "batchRate": "250.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 3675
+                }
+            },
+            {
+                "stockItem": "40 Mesh",
+                "rate": "52.00/mtr",
+                "amount": 23400,
+                "actualQty": "450.00 mtr",
+                "billedQty": "450.00 mtr",
+                "batch": {
+                    "batchId": 3867,
+                    "batchName": "Br Bor-42\"-37/-",
+                    "godown": "Nalam Godown",
+                    "amount": 23400,
+                    "actualQty": "450.00 mtr",
+                    "billedQty": "450.00 mtr",
+                    "batchRate": "52.00/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 23400
+                }
+            },
+            {
+                "stockItem": "40 Mesh",
+                "rate": "70.00/mtr",
+                "amount": 2100,
+                "actualQty": "30.00 mtr",
+                "billedQty": "30.00 mtr",
+                "batch": {
+                    "batchId": 3865,
+                    "batchName": "48\"-Pfco-Rs.43/-",
+                    "godown": "Main Location",
+                    "amount": 2100,
+                    "actualQty": "30.00 mtr",
+                    "billedQty": "30.00 mtr",
+                    "batchRate": "70.00/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 2100
+                }
+            },
+            {
+                "stockItem": "P.SHEET",
+                "rate": "200.00/kgs",
+                "amount": 10814,
+                "actualQty": "54.070 kgs",
+                "billedQty": "54.070 kgs",
+                "batch": {
+                    "batchId": 3530,
+                    "batchName": "1mtr-Hari-Rs.142/-",
+                    "godown": "Main Location",
+                    "amount": 10814,
+                    "actualQty": "54.070 kgs",
+                    "billedQty": "54.070 kgs",
+                    "batchRate": "200.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 10814
+                }
+            }
+        ],
+        "ledger": {
+            "name": [
+                "Vaisakhi Bio Marine Farms,Addaripeta",
+                "ROUND OFF"
+            ],
+            "amount": [
+                -150275,
+                0.2
+            ]
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a86c",
+        "voucherType": "Sales",
+        "party": "Cash",
+        "voucherNumber": 1,
+        "reference": "Direct",
+        "numberingStyle": "Auto Retain",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174188,
+        "voucherKey": 198049531953265,
+        "amount": -4179.96,
+        "items": [
+            {
+                "stockItem": "LEAD",
+                "rate": "260.00/kgs",
+                "amount": 780,
+                "actualQty": "3.000 kgs",
+                "billedQty": "3.000 kgs",
+                "batch": {
+                    "batchId": [
+                        3448,
+                        3447
+                    ],
+                    "batchName": [
+                        "20gms-Rs.234/-",
+                        "10gms-Rs.240/-"
+                    ],
+                    "godown": [
+                        "Main Location",
+                        "Main Location"
+                    ],
+                    "amount": [
+                        520,
+                        260
+                    ],
+                    "actualQty": [
+                        "2.000 kgs",
+                        "1.000 kgs"
+                    ],
+                    "billedQty": [
+                        "2.000 kgs",
+                        "1.000 kgs"
+                    ],
+                    "batchRate": [
+                        "260.00/kgs",
+                        "260.00/kgs"
+                    ],
+                    "manufacturingDate": [
+                        "",
+                        ""
+                    ]
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 780
+                }
+            },
+            {
+                "stockItem": "F.LINE PKTS",
+                "rate": "30.00/Nos",
+                "amount": 30,
+                "actualQty": "1 Nos",
+                "billedQty": "1 Nos",
+                "batch": {
+                    "batchId": 3396,
+                    "batchName": "0.60-Gd-Rs.10.27-Rs.17/-",
+                    "godown": "Main Location",
+                    "amount": 30,
+                    "actualQty": "1 Nos",
+                    "billedQty": "1 Nos",
+                    "batchRate": "30.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 30
+                }
+            },
+            {
+                "stockItem": "TINSEL",
+                "rate": "20.00/Nos",
+                "amount": 20,
+                "actualQty": "1 Nos",
+                "billedQty": "1 Nos",
+                "batch": {
+                    "batchId": 3732,
+                    "batchName": "Mix Color-Praise-Rs.5/-",
+                    "godown": "Main Location",
+                    "amount": 20,
+                    "actualQty": "1 Nos",
+                    "billedQty": "1 Nos",
+                    "batchRate": "20.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 20
+                }
+            },
+            {
+                "stockItem": "P.SHEET",
+                "rate": "186.34/kgs",
+                "amount": 600.01,
+                "actualQty": "3.220 kgs",
+                "billedQty": "3.220 kgs",
+                "batch": {
+                    "batchId": 3530,
+                    "batchName": "1mtr-Hari-Rs.142/-",
+                    "godown": "Main Location",
+                    "amount": 600.01,
+                    "actualQty": "3.220 kgs",
+                    "billedQty": "3.220 kgs",
+                    "batchRate": "186.34/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 600.01
+                }
+            },
+            {
+                "stockItem": "30-MADHURAM-48\"",
+                "rate": "100.00/mtr",
+                "amount": 200,
+                "actualQty": "2.00 mtr",
+                "billedQty": "2.00 mtr",
+                "batch": {
+                    "batchId": 3248,
+                    "batchName": "Blue-SHQ-48\"-Pf-Rs.67/-",
+                    "godown": "Main Location",
+                    "amount": 200,
+                    "actualQty": "2.00 mtr",
+                    "billedQty": "2.00 mtr",
+                    "batchRate": "100.00/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 200
+                }
+            },
+            {
+                "stockItem": "Velcro Sticker",
+                "rate": "18.75/mtr",
+                "amount": 150,
+                "actualQty": "8.00 mtr",
+                "billedQty": "8.00 mtr",
+                "batch": {
+                    "batchId": 5171,
+                    "batchName": "20mm-Blk-Rs.10/-",
+                    "godown": "Main Location",
+                    "amount": 150,
+                    "actualQty": "8.00 mtr",
+                    "billedQty": "8.00 mtr",
+                    "batchRate": "18.75/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 150
+                }
+            },
+            {
+                "stockItem": "GD Connected",
+                "rate": "633.33/kgs",
+                "amount": 190,
+                "actualQty": "0.300 kgs",
+                "billedQty": "0.300 kgs",
+                "batch": {
+                    "batchId": 4932,
+                    "batchName": "Conn-Rs.370/-",
+                    "godown": "Main Location",
+                    "amount": 190,
+                    "actualQty": "0.300 kgs",
+                    "billedQty": "0.300 kgs",
+                    "batchRate": "633.33/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 190
+                }
+            },
+            {
+                "stockItem": "LEAD",
+                "rate": "250.00/kgs",
+                "amount": 500,
+                "actualQty": "2.000 kgs",
+                "billedQty": "2.000 kgs",
+                "batch": {
+                    "batchId": 3449,
+                    "batchName": "50gms-Rs.234/-",
+                    "godown": "Main Location",
+                    "amount": 500,
+                    "actualQty": "2.000 kgs",
+                    "billedQty": "2.000 kgs",
+                    "batchRate": "250.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 500
+                }
+            },
+            {
+                "stockItem": "Big Hole-Knitted Fabric Mtrs",
+                "rate": "40.00/mtr",
+                "amount": 240,
+                "actualQty": "6.00 mtr",
+                "billedQty": "6.00 mtr",
+                "batch": {
+                    "batchId": 5274,
+                    "batchName": "Bighole-RK-Rs.13/-",
+                    "godown": "Main Location",
+                    "amount": 240,
+                    "actualQty": "6.00 mtr",
+                    "billedQty": "6.00 mtr",
+                    "batchRate": "40.00/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 240
+                }
+            },
+            {
+                "stockItem": "Nylon Reels Nos(Small)",
+                "rate": "70.00/Nos",
+                "amount": 70,
+                "actualQty": "1 Nos",
+                "billedQty": "1 Nos",
+                "batch": {
+                    "batchId": 4869,
+                    "batchName": "100gms-Shy-Rs.45/-",
+                    "godown": "Main Location",
+                    "amount": 70,
+                    "actualQty": "1 Nos",
+                    "billedQty": "1 Nos",
+                    "batchRate": "70.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 70
+                }
+            },
+            {
+                "stockItem": "LEAD",
+                "rate": "260.00/kgs",
+                "amount": 260,
+                "actualQty": "1.000 kgs",
+                "billedQty": "1.000 kgs",
+                "batch": {
+                    "batchId": 3449,
+                    "batchName": "50gms-Rs.234/-",
+                    "godown": "Main Location",
+                    "amount": 260,
+                    "actualQty": "1.000 kgs",
+                    "billedQty": "1.000 kgs",
+                    "batchRate": "260.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 260
+                }
+            },
+            {
+                "stockItem": "LEAD",
+                "rate": "260.00/kgs",
+                "amount": 520,
+                "actualQty": "2.000 kgs",
+                "billedQty": "2.000 kgs",
+                "batch": {
+                    "batchId": 3448,
+                    "batchName": "20gms-Rs.234/-",
+                    "godown": "Main Location",
+                    "amount": 520,
+                    "actualQty": "2.000 kgs",
+                    "billedQty": "2.000 kgs",
+                    "batchRate": "260.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 520
+                }
+            },
+            {
+                "stockItem": "LEAD",
+                "rate": "300.00/kgs",
+                "amount": 120,
+                "actualQty": "0.400 kgs",
+                "billedQty": "0.400 kgs",
+                "batch": {
+                    "batchId": 3448,
+                    "batchName": "20gms-Rs.234/-",
+                    "godown": "Main Location",
+                    "amount": 120,
+                    "actualQty": "0.400 kgs",
+                    "billedQty": "0.400 kgs",
+                    "batchRate": "300.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 120
+                }
+            },
+            {
+                "stockItem": "Water Proof Tape Mtrs",
+                "rate": "33.33/mtr",
+                "amount": 499.95,
+                "actualQty": "15.00 mtr",
+                "billedQty": "15.00 mtr",
+                "batch": {
+                    "batchId": 5206,
+                    "batchName": "Maruthi-2\"-5mtr Roll-Rs.16/- Mtr",
+                    "godown": "Main Location",
+                    "amount": 499.95,
+                    "actualQty": "15.00 mtr",
+                    "billedQty": "15.00 mtr",
+                    "batchRate": "33.33/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 499.95
+                }
+            }
+        ],
+        "ledger": {
+            "name": "Cash",
+            "amount": -4179.96
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a86d",
+        "voucherType": "Sales/Cr Mani",
+        "party": "Jampana Manikantha Raju( Srinivasa Scientific)",
+        "voucherNumber": 6,
+        "reference": "CR/6",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174189,
+        "voucherKey": 198049531953272,
+        "amount": -24210,
+        "items": [
+            {
+                "stockItem": "Export Surplus New",
+                "rate": "500.00/kgs",
+                "amount": 1410,
+                "actualQty": "2.820 kgs",
+                "billedQty": "2.820 kgs",
+                "batch": {
+                    "batchId": 4529,
+                    "batchName": "1.10-Rs.286/-",
+                    "godown": "Main Location",
+                    "amount": 1410,
+                    "actualQty": "2.820 kgs",
+                    "billedQty": "2.820 kgs",
+                    "batchRate": "500.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 1410
+                }
+            },
+            {
+                "stockItem": "Mcf Scorpio",
+                "rate": "38.00/mtr",
+                "amount": 22800,
+                "actualQty": "600.00 mtr",
+                "billedQty": "600.00 mtr",
+                "batch": {
+                    "batchId": 4245,
+                    "batchName": "60\" Gr-Rs.27/-",
+                    "godown": "Nalam Godown",
+                    "amount": 22800,
+                    "actualQty": "600.00 mtr",
+                    "billedQty": "600.00 mtr",
+                    "batchRate": "38.00/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 22800
+                }
+            }
+        ],
+        "ledger": {
+            "name": "Jampana Manikantha Raju( Srinivasa Scientific)",
+            "amount": -24210
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a86e",
+        "voucherType": "Sales/Cr Mani",
+        "party": "Phonepe Business (Axis)",
+        "voucherNumber": 7,
+        "reference": "CR/7",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174190,
+        "voucherKey": 198049531953280,
+        "amount": -6020,
+        "items": [],
+        "ledger": {
+            "name": "Phonepe Business (Axis)",
+            "amount": -6020
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a871",
+        "voucherType": "Sales/slip",
+        "party": "T Rama Krishna Kakinada",
+        "voucherNumber": 3,
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174193,
+        "voucherKey": 198049531953296,
+        "amount": -7380,
+        "items": [
+            {
+                "stockItem": "Superline",
+                "rate": "630.00/kgs",
+                "amount": 4410,
+                "actualQty": "7.000 kgs",
+                "billedQty": "7.000 kgs",
+                "batch": {
+                    "batchId": [
+                        4294,
+                        4314
+                    ],
+                    "batchName": [
+                        "1.40-Blu-Rs.497/-",
+                        "1.30-Blue-Rs.538/-"
+                    ],
+                    "godown": [
+                        "Main Location",
+                        "Main Location"
+                    ],
+                    "amount": [
+                        1789.2,
+                        2620.8
+                    ],
+                    "actualQty": [
+                        "2.840 kgs",
+                        "4.160 kgs"
+                    ],
+                    "billedQty": [
+                        "2.840 kgs",
+                        "4.160 kgs"
+                    ],
+                    "batchRate": [
+                        "630.00/kgs",
+                        "630.00/kgs"
+                    ],
+                    "manufacturingDate": [
+                        "",
+                        ""
+                    ]
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 4410
+                }
+            },
+            {
+                "stockItem": "LEAD",
+                "rate": "260.00/kgs",
+                "amount": 2607.8,
+                "actualQty": "10.030 kgs",
+                "billedQty": "10.030 kgs",
+                "batch": {
+                    "batchId": 3449,
+                    "batchName": "50gms-Rs.234/-",
+                    "godown": "Main Location",
+                    "amount": 2607.8,
+                    "actualQty": "10.030 kgs",
+                    "billedQty": "10.030 kgs",
+                    "batchRate": "260.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 2607.8
+                }
+            },
+            {
+                "stockItem": "Gloves",
+                "rate": "12.00/Nos",
+                "amount": 360,
+                "actualQty": "30 Nos",
+                "billedQty": "30 Nos",
+                "batch": {
+                    "batchId": 4012,
+                    "batchName": "Blue-60gms-RR-Rs.8.50",
+                    "godown": "Main Location",
+                    "amount": 360,
+                    "actualQty": "30 Nos",
+                    "billedQty": "30 Nos",
+                    "batchRate": "12.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 360
+                }
+            }
+        ],
+        "ledger": {
+            "name": [
+                "T Rama Krishna Kakinada",
+                "ROUND OFF"
+            ],
+            "amount": [
+                -7380,
+                2.2
+            ]
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a873",
+        "voucherType": "Sales/CA",
+        "party": "Cash",
+        "voucherNumber": 3,
+        "reference": "CA/3",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174195,
+        "voucherKey": 198049531953312,
+        "amount": -2770,
+        "items": [
+            {
+                "stockItem": "2/3-26MM",
+                "rate": "750.00/kgs",
+                "amount": 1950,
+                "actualQty": "2.600 kgs",
+                "billedQty": "2.600 kgs",
+                "batch": {
+                    "batchId": 3174,
+                    "batchName": "600md-KK-Rs.522/-",
+                    "godown": "Stairs Godown",
+                    "amount": 1950,
+                    "actualQty": "2.600 kgs",
+                    "billedQty": "2.600 kgs",
+                    "batchRate": "750.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 1950
+                }
+            },
+            {
+                "stockItem": "Nylon Reels Nos(Small)",
+                "rate": "80.00/Nos",
+                "amount": 80,
+                "actualQty": "1 Nos",
+                "billedQty": "1 Nos",
+                "batch": {
+                    "batchId": 4871,
+                    "batchName": "100gms-Sfil-Rs.33/-",
+                    "godown": "Main Location",
+                    "amount": 80,
+                    "actualQty": "1 Nos",
+                    "billedQty": "1 Nos",
+                    "batchRate": "80.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 80
+                }
+            },
+            {
+                "stockItem": "NEEDLES",
+                "rate": "10.00/Nos",
+                "amount": 20,
+                "actualQty": "2 Nos",
+                "billedQty": "2 Nos",
+                "batch": {
+                    "batchId": 3508,
+                    "batchName": "5\"-Curl-Tr-Fish-Rs.5.60",
+                    "godown": "Main Location",
+                    "amount": 20,
+                    "actualQty": "2 Nos",
+                    "billedQty": "2 Nos",
+                    "batchRate": "10.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 20
+                }
+            },
+            {
+                "stockItem": "0.75/35",
+                "rate": "500.00/kgs",
+                "amount": 240,
+                "actualQty": "0.480 kgs",
+                "billedQty": "0.480 kgs",
+                "batch": {
+                    "batchId": 4212,
+                    "batchName": "100md-Hari-Rs.255/-",
+                    "godown": "Main Location",
+                    "amount": 240,
+                    "actualQty": "0.480 kgs",
+                    "billedQty": "0.480 kgs",
+                    "batchRate": "500.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 240
+                }
+            },
+            {
+                "stockItem": "ROPE",
+                "rate": "320.00/kgs",
+                "amount": 80,
+                "actualQty": "0.250 kgs",
+                "billedQty": "0.250 kgs",
+                "batch": {
+                    "batchId": 3543,
+                    "batchName": "Tuf-Rs.170",
+                    "godown": "Main Location",
+                    "amount": 80,
+                    "actualQty": "0.250 kgs",
+                    "billedQty": "0.250 kgs",
+                    "batchRate": "320.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 80
+                }
+            },
+            {
+                "stockItem": "ROPE",
+                "rate": "320.00/kgs",
+                "amount": 80,
+                "actualQty": "0.250 kgs",
+                "billedQty": "0.250 kgs",
+                "batch": {
+                    "batchId": 3543,
+                    "batchName": "Tuf-Rs.170",
+                    "godown": "Main Location",
+                    "amount": 80,
+                    "actualQty": "0.250 kgs",
+                    "billedQty": "0.250 kgs",
+                    "batchRate": "320.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 80
+                }
+            },
+            {
+                "stockItem": "PPMF TWINE",
+                "rate": "500.00/kgs",
+                "amount": 160,
+                "actualQty": "0.320 kgs",
+                "billedQty": "0.320 kgs",
+                "batch": {
+                    "batchId": 3531,
+                    "batchName": "1/3-Glon-Rs.325/-",
+                    "godown": "Main Location",
+                    "amount": 160,
+                    "actualQty": "0.320 kgs",
+                    "billedQty": "0.320 kgs",
+                    "batchRate": "500.00/kgs",
+                    "manufacturingDate": 20230131
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 160
+                }
+            },
+            {
+                "stockItem": "GD Connected",
+                "rate": "592.59/kgs",
+                "amount": 160,
+                "actualQty": "0.270 kgs",
+                "billedQty": "0.270 kgs",
+                "batch": {
+                    "batchId": 4932,
+                    "batchName": "Conn-Rs.370/-",
+                    "godown": "Main Location",
+                    "amount": 160,
+                    "actualQty": "0.270 kgs",
+                    "billedQty": "0.270 kgs",
+                    "batchRate": "592.59/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 160
+                }
+            }
+        ],
+        "ledger": {
+            "name": "Cash",
+            "amount": -2770
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a876",
+        "voucherType": "Sales/Cr Mani",
+        "party": "Phonepe Business (Axis)",
+        "voucherNumber": 8,
+        "reference": "CR/8",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174198,
+        "voucherKey": 198049531953336,
+        "amount": -2670,
+        "items": [
+            {
+                "stockItem": "3.50 White F.Line",
+                "rate": "471.70/kgs",
+                "amount": 1000,
+                "actualQty": "2.120 kgs",
+                "billedQty": "2.120 kgs",
+                "batch": {
+                    "batchId": 3253,
+                    "batchName": "Gd-Rs.250/-",
+                    "godown": "Main Location",
+                    "amount": 1000,
+                    "actualQty": "2.120 kgs",
+                    "billedQty": "2.120 kgs",
+                    "batchRate": "471.70/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 1000
+                }
+            },
+            {
+                "stockItem": "Bleaching Hapa",
+                "rate": "120.00/Nos",
+                "amount": 120,
+                "actualQty": "1 Nos",
+                "billedQty": "1 Nos",
+                "batch": {
+                    "batchId": 4600,
+                    "batchName": "20pf-Rs.30+Rs.21=Rs.81",
+                    "godown": "Main Location",
+                    "amount": 120,
+                    "actualQty": "1 Nos",
+                    "billedQty": "1 Nos",
+                    "batchRate": "120.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 120
+                }
+            },
+            {
+                "stockItem": "ROPE",
+                "rate": "320.00/kgs",
+                "amount": 80,
+                "actualQty": "0.250 kgs",
+                "billedQty": "0.250 kgs",
+                "batch": {
+                    "batchId": 3543,
+                    "batchName": "Tuf-Rs.170",
+                    "godown": "Main Location",
+                    "amount": 80,
+                    "actualQty": "0.250 kgs",
+                    "billedQty": "0.250 kgs",
+                    "batchRate": "320.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 80
+                }
+            },
+            {
+                "stockItem": "Mosq Nets Hosur",
+                "rate": "280.00/Nos",
+                "amount": 280,
+                "actualQty": "1 Nos",
+                "billedQty": "1 Nos",
+                "batch": {
+                    "batchId": 5256,
+                    "batchName": "15mtr-6.5*4.5-Rs.120/-",
+                    "godown": "Main Location",
+                    "amount": 280,
+                    "actualQty": "1 Nos",
+                    "billedQty": "1 Nos",
+                    "batchRate": "280.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 280
+                }
+            },
+            {
+                "stockItem": "NYLON",
+                "rate": "640.00/kgs",
+                "amount": 160,
+                "actualQty": "0.250 kgs",
+                "billedQty": "0.250 kgs",
+                "batch": {
+                    "batchId": 3515,
+                    "batchName": "Dyed-Kk-Rs.455/-",
+                    "godown": "Main Location",
+                    "amount": 160,
+                    "actualQty": "0.250 kgs",
+                    "billedQty": "0.250 kgs",
+                    "batchRate": "640.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 160
+                }
+            },
+            {
+                "stockItem": "NYLON",
+                "rate": "649.12/kgs",
+                "amount": 740,
+                "actualQty": "1.140 kgs",
+                "billedQty": "1.140 kgs",
+                "batch": {
+                    "batchId": 3515,
+                    "batchName": "Dyed-Kk-Rs.455/-",
+                    "godown": "Main Location",
+                    "amount": 740,
+                    "actualQty": "1.140 kgs",
+                    "billedQty": "1.140 kgs",
+                    "batchRate": "649.12/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 740
+                }
+            },
+            {
+                "stockItem": "Gloves",
+                "rate": "14.00/Nos",
+                "amount": 140,
+                "actualQty": "10 Nos",
+                "billedQty": "10 Nos",
+                "batch": {
+                    "batchId": 4012,
+                    "batchName": "Blue-60gms-RR-Rs.8.50",
+                    "godown": "Main Location",
+                    "amount": 140,
+                    "actualQty": "10 Nos",
+                    "billedQty": "10 Nos",
+                    "batchRate": "14.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 140
+                }
+            },
+            {
+                "stockItem": "Velcro Sticker",
+                "rate": "25.00/mtr",
+                "amount": 150,
+                "actualQty": "6.00 mtr",
+                "billedQty": "6.00 mtr",
+                "batch": {
+                    "batchId": 5171,
+                    "batchName": "20mm-Blk-Rs.10/-",
+                    "godown": "Main Location",
+                    "amount": 150,
+                    "actualQty": "6.00 mtr",
+                    "billedQty": "6.00 mtr",
+                    "batchRate": "25.00/mtr",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 150
+                }
+            }
+        ],
+        "ledger": {
+            "name": "Phonepe Business (Axis)",
+            "amount": -2670
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a879",
+        "voucherType": "Sales/CA",
+        "party": "Cash",
+        "voucherNumber": 4,
+        "reference": "CA/4",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174201,
+        "voucherKey": 198049531953360,
+        "amount": -3190,
+        "items": [
+            {
+                "stockItem": "Superline Connected",
+                "rate": "660.00/kgs",
+                "amount": 330,
+                "actualQty": "0.500 kgs",
+                "billedQty": "0.500 kgs",
+                "batch": {
+                    "batchId": 4677,
+                    "batchName": "0.80-Blue-Rs.548/-",
+                    "godown": "Main Location",
+                    "amount": 330,
+                    "actualQty": "0.500 kgs",
+                    "billedQty": "0.500 kgs",
+                    "batchRate": "660.00/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 330
+                }
+            },
+            {
+                "stockItem": "Gloves",
+                "rate": "12.00/Nos",
+                "amount": 120,
+                "actualQty": "10 Nos",
+                "billedQty": "10 Nos",
+                "batch": {
+                    "batchId": 4012,
+                    "batchName": "Blue-60gms-RR-Rs.8.50",
+                    "godown": "Main Location",
+                    "amount": 120,
+                    "actualQty": "10 Nos",
+                    "billedQty": "10 Nos",
+                    "batchRate": "12.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 120
+                }
+            },
+            {
+                "stockItem": "Viaadi Hooks",
+                "rate": "1.80/Nos",
+                "amount": 180,
+                "actualQty": "100 Nos",
+                "billedQty": "100 Nos",
+                "batch": {
+                    "batchId": 4066,
+                    "batchName": "8-Rs.1060/- (1.06)",
+                    "godown": "Main Location",
+                    "amount": 180,
+                    "actualQty": "100 Nos",
+                    "billedQty": "100 Nos",
+                    "batchRate": "1.80/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 180
+                }
+            },
+            {
+                "stockItem": "Gd 50gms Bobbins",
+                "rate": "50.00/Nos",
+                "amount": 50,
+                "actualQty": "1 Nos",
+                "billedQty": "1 Nos",
+                "batch": {
+                    "batchId": 4763,
+                    "batchName": "0.32-Gr-Rs.31/-",
+                    "godown": "Main Location",
+                    "amount": 50,
+                    "actualQty": "1 Nos",
+                    "billedQty": "1 Nos",
+                    "batchRate": "50.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 50
+                }
+            },
+            {
+                "stockItem": "Y- 3cm",
+                "rate": "80.00/Nos",
+                "amount": 400,
+                "actualQty": "5 Nos",
+                "billedQty": "5 Nos",
+                "batch": {
+                    "batchId": 4805,
+                    "batchName": "19.07.25-Rs.29/-",
+                    "godown": "Main Location",
+                    "amount": 400,
+                    "actualQty": "5 Nos",
+                    "billedQty": "5 Nos",
+                    "batchRate": "80.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 400
+                }
+            },
+            {
+                "stockItem": "Shading Net Kgs",
+                "rate": "339.81/kgs",
+                "amount": 350,
+                "actualQty": "1.030 kgs",
+                "billedQty": "1.030 kgs",
+                "batch": {
+                    "batchId": 4186,
+                    "batchName": "Rishi-Rs.205/-",
+                    "godown": "Main Location",
+                    "amount": 350,
+                    "actualQty": "1.030 kgs",
+                    "billedQty": "1.030 kgs",
+                    "batchRate": "339.81/kgs",
+                    "manufacturingDate": 20210723
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 350
+                }
+            },
+            {
+                "stockItem": "0.75/35",
+                "rate": "492.54/kgs",
+                "amount": 330,
+                "actualQty": "0.670 kgs",
+                "billedQty": "0.670 kgs",
+                "batch": {
+                    "batchId": 4212,
+                    "batchName": "100md-Hari-Rs.255/-",
+                    "godown": "Main Location",
+                    "amount": 330,
+                    "actualQty": "0.670 kgs",
+                    "billedQty": "0.670 kgs",
+                    "batchRate": "492.54/kgs",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 330
+                }
+            },
+            {
+                "stockItem": "Shading Net Kgs",
+                "rate": "358.40/kgs",
+                "amount": 1430,
+                "actualQty": "3.990 kgs",
+                "billedQty": "3.990 kgs",
+                "batch": {
+                    "batchId": 4186,
+                    "batchName": "Rishi-Rs.205/-",
+                    "godown": "Main Location",
+                    "amount": 1430,
+                    "actualQty": "3.990 kgs",
+                    "billedQty": "3.990 kgs",
+                    "batchRate": "358.40/kgs",
+                    "manufacturingDate": 20210723
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 1430
+                }
+            }
+        ],
+        "ledger": {
+            "name": "Cash",
+            "amount": -3190
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a87a",
+        "voucherType": "Sales/Cr Mani",
+        "party": "Phonepe Business (Axis)",
+        "voucherNumber": 9,
+        "reference": "CR/9",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174202,
+        "voucherKey": 198049531953368,
+        "amount": -2500,
+        "items": [],
+        "ledger": {
+            "name": "Phonepe Business (Axis)",
+            "amount": -2500
+        }
+    },
+    {
+        "date": 20260401,
+        "guid": "56b158ca-11af-4ad5-bc28-c1c2428041b9-0002a87b",
+        "voucherType": "Sales/Cr Mani",
+        "party": "Ragithi Sattibabu",
+        "voucherNumber": 10,
+        "reference": "CR/10",
+        "numberingStyle": "Auto Renumber",
+        "persistedView": "Invoice Voucher View",
+        "isInvoice": "Yes",
+        "masterId": 174203,
+        "voucherKey": 198049531953376,
+        "amount": -3900,
+        "items": [
+            {
+                "stockItem": "Superline Connected",
+                "rate": "660.00/kgs",
+                "amount": 1339.8,
+                "actualQty": "2.030 kgs",
+                "billedQty": "2.030 kgs",
+                "batch": {
+                    "batchId": [
+                        4673,
+                        4674
+                    ],
+                    "batchName": [
+                        "1.20-Wh-5*200-Rs.515/-",
+                        "1.30-Wh-5*200-Rs.515/-"
+                    ],
+                    "godown": [
+                        "Main Location",
+                        "Main Location"
+                    ],
+                    "amount": [
+                        693,
+                        646.8
+                    ],
+                    "actualQty": [
+                        "1.050 kgs",
+                        "0.980 kgs"
+                    ],
+                    "billedQty": [
+                        "1.050 kgs",
+                        "0.980 kgs"
+                    ],
+                    "batchRate": [
+                        "660.00/kgs",
+                        "660.00/kgs"
+                    ],
+                    "manufacturingDate": [
+                        "",
+                        ""
+                    ]
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 1339.8
+                }
+            },
+            {
+                "stockItem": "Gloves",
+                "rate": "12.00/Nos",
+                "amount": 360,
+                "actualQty": "30 Nos",
+                "billedQty": "30 Nos",
+                "batch": {
+                    "batchId": 4012,
+                    "batchName": "Blue-60gms-RR-Rs.8.50",
+                    "godown": "Main Location",
+                    "amount": 360,
+                    "actualQty": "30 Nos",
+                    "billedQty": "30 Nos",
+                    "batchRate": "12.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 360
+                }
+            },
+            {
+                "stockItem": "Viaadi Hooks",
+                "rate": "11.80/Nos",
+                "amount": 1180,
+                "actualQty": "100 Nos",
+                "billedQty": "100 Nos",
+                "batch": {
+                    "batchId": 4058,
+                    "batchName": "3-Rs.6843/-",
+                    "godown": "Main Location",
+                    "amount": 1180,
+                    "actualQty": "100 Nos",
+                    "billedQty": "100 Nos",
+                    "batchRate": "11.80/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 1180
+                }
+            },
+            {
+                "stockItem": "Viaadi Hooks",
+                "rate": "7.80/Nos",
+                "amount": 780,
+                "actualQty": "100 Nos",
+                "billedQty": "100 Nos",
+                "batch": {
+                    "batchId": 4077,
+                    "batchName": "4-Rs.4960/-",
+                    "godown": "Main Location",
+                    "amount": 780,
+                    "actualQty": "100 Nos",
+                    "billedQty": "100 Nos",
+                    "batchRate": "7.80/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 780
+                }
+            },
+            {
+                "stockItem": "Anchor Gaff Hooks",
+                "rate": "120.00/Nos",
+                "amount": 240,
+                "actualQty": "2 Nos",
+                "billedQty": "2 Nos",
+                "batch": {
+                    "batchId": 4905,
+                    "batchName": "6/0-6mm-Beko-Rs.75/-",
+                    "godown": "Main Location",
+                    "amount": 240,
+                    "actualQty": "2 Nos",
+                    "billedQty": "2 Nos",
+                    "batchRate": "120.00/Nos",
+                    "manufacturingDate": ""
+                },
+                "accounting": {
+                    "ledger": "Sales",
+                    "amount": 240
+                }
+            }
+        ],
+        "ledger": {
+            "name": [
+                "Ragithi Sattibabu",
+                "ROUND OFF"
+            ],
+            "amount": [
+                -3900,
+                0.2
+            ]
+        }
+    }
+]
