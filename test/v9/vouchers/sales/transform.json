@@ -1,0 +1,54 @@
+{
+    "mapping": {
+        "item": {
+            "vouchers": [
+                {
+                    "list": "VOUCHER",
+                    "item": {
+                        "date": "DATE.#text",
+                        "voucherTypeName": "VOUCHERTYPENAME",
+                        "baseUnit": "BASEUNITS.#text",
+                        "partyLedgerName": "PARTYLEDGERNAME.#text",
+                        "voucherNumber": "VOUCHERNUMBER",
+                        "reference": "REFERENCE.#text",
+                        "isDeemedPositive": "ISDEEMEDPOSITIVE.#text",
+                        "isInvoice": "ISINVOICE",
+                        "masterID": "MASTERID.#text",
+                        "voucherKey": "VOUCHERKEY.#text",
+                        "amount": "AMOUNT.#text",
+                        "vchType": "@_VCHTYPE",
+                        "inventoryEntries": [
+                            {
+                                "list": "ALLINVENTORYENTRIES.LIST",
+                                "item": {
+                                    "stockItemName": "STOCKITEMNAME",
+                                    "rate": "RATE",
+                                    "amount": "AMOUNT",
+                                    "actualQty": "ACTUALQTY",
+                                    "billedQty": "BILLEDQTY",
+                                    "batches": [
+                                        {
+                                            "list": "BATCHALLOCATIONS.LIST",
+                                            "item": {
+                                                "MFDON": "MFDON",
+                                                "godownName": "GODOWNNAME",
+                                                "batchName": "BATCHNAME",
+                                                "destinationGodownName": "DESTINATIONGODOWNNAME",
+                                                "batchID": "BATCHID.#text",
+                                                "batchDiscount": "BATCHDISCOUNT.#text",
+                                                "amount": "AMOUNT",
+                                                "actualQty": "ACTUALQTY",
+                                                "billedQty": "BILLEDQTY",
+                                                "batchRate": "BATCHRATE.#text"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
