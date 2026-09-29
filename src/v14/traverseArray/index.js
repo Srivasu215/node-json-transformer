@@ -1,7 +1,8 @@
-import { IDENTIFIERS } from "./constants.js";
-import { resolvePath, isNonEmptyArray } from "./resolve.js";
-import { resolveValue } from "./value.js";
-import { traverse } from "./traverse.js";
+import { IDENTIFIERS } from "../constants.js";
+import { resolvePath } from "../resolve.js";
+import traverseObject from "./traverseObject.js";
+import collectArray from "./collectArray.js";
+// import traverseObject from "../";
 
 function isPlainObject(value) {
     return (
@@ -10,93 +11,6 @@ function isPlainObject(value) {
         Object.getPrototypeOf(value) === Object.prototype
     );
 }
-
-/*
- * An object mapping defines the output keys. Each instruction tells us how
- * to obtain that output value.
- */
-const traverseObject = (mapping, source, context) => {
-    const result = {};
-
-    Object.keys(mapping).forEach((outputKey) => {
-        const instruction = mapping[outputKey];
-
-        if (typeof instruction === "string") {
-            result[outputKey] = resolveValue(
-                instruction,
-                source,
-                context.rootSource,
-                context.configuration
-            );
-            return;
-        }
-
-        if (Array.isArray(instruction) && instruction.length > 0) {
-            result[outputKey] = startFunc(
-                instruction[0],
-                source,
-                context
-            );
-            return;
-        }
-
-        if (instruction && typeof instruction === "object") {
-            result[outputKey] = traverse(
-                instruction,
-                source,
-                context
-            );
-        }
-    });
-
-    return result;
-};
-
-const collectArray = (items, source, context) => {
-    const result = [];
-
-    items.forEach((instruction) => {
-        if (typeof instruction === "string") {
-            const value = resolveValue(
-                instruction,
-                source,
-                context.rootSource,
-                context.configuration
-            );
-
-            if (isNonEmptyArray(value)) {
-                result.push(...value);
-            } else {
-                result.push(value);
-            }
-
-            return;
-        }
-
-        if (Array.isArray(instruction)) {
-            result.push(
-                ...startFunc(
-                    instruction[0],
-                    source,
-                    context
-                )
-            );
-            return;
-        }
-
-        if (instruction && typeof instruction === "object") {
-            result.push(
-                traverseObject(
-                    instruction,
-                    source,
-                    context
-                )
-            );
-        }
-    });
-
-    return result;
-};
 
 /*
  * Determines whether the list mapping represents an explicit

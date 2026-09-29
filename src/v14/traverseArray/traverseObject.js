@@ -1,6 +1,5 @@
-import { resolveValue } from "./value.js";
-import traverseArray from "./traverseArray/index.js";
-import { traverse } from "./traverse.js";
+import { resolveValue } from "../value.js";
+import { traverse } from "../traverse.js";
 
 /*
  * An object mapping defines the output keys. Each instruction tells us how
@@ -23,12 +22,20 @@ const startFunc = (mapping, source, context) => {
         }
 
         if (Array.isArray(instruction) && instruction.length > 0) {
-            result[outputKey] = traverseArray(instruction[0], source, context);
+            result[outputKey] = startFunc(
+                instruction[0],
+                source,
+                context
+            );
             return;
         }
 
         if (instruction && typeof instruction === "object") {
-            result[outputKey] = traverse(instruction, source, context);
+            result[outputKey] = traverse(
+                instruction,
+                source,
+                context
+            );
         }
     });
 
