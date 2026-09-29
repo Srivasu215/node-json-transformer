@@ -1,4 +1,4 @@
-import traverseObject from "./traverseObject.js";
+import traverseObject from "../traverseObject.js";
 
 /*
  * Traverse a source object as a single array element.

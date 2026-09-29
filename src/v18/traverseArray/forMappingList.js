@@ -1,6 +1,6 @@
 import { IDENTIFIERS } from "../constants.js";
 import { resolvePath } from "../resolve.js";
-import traverseObject from "./traverseObject.js";
+import traverseObject from "../traverseObject.js";
 
 import traverseSource from "./traverseSource.js";
 
