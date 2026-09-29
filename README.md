@@ -545,3 +545,7 @@ The project should be understood from behavior and architecture rather than from
 ## License
 
 See the license information retained by the upstream project and the repository's package metadata before redistributing a derivative package.
+
+## cloned from
+
+https://github.com/Sudhirmiglani/node-json-transformer

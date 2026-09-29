@@ -1,0 +1,29 @@
+{
+  "name": "json-transformer-node",
+  "version": "1.0.6",
+  "description": "Json Transformer Utility. Many times you want to interact with 3rd party services or clients, this utility acts as an adaptor and help you mantain code clean by maintaining only the json mappings",
+  "main": "index.js",
+  "keywords": [
+    "json",
+    "node",
+    "transformer",
+    "adaptor",
+    "converter",
+    "array",
+    "object",
+    "mapping"
+  ],
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sudhirmiglani/node-json-transformer.git"
+  },
+  "author": "Sudhir Miglani",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "semver": "^5.3.0"
+  }
+}
