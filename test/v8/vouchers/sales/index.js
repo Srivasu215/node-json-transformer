@@ -3,6 +3,8 @@ import nodeJsonTransformer from "../../../../src/index.js";
 
 import periodJson from './period.json' with {type: 'json'};
 
+import transformJson from './transform.json' with {type: 'json'};
+
 var transformation = {
     mapping: {
         item: {
@@ -13,14 +15,22 @@ var transformation = {
                     voucherTypeName: "VOUCHERTYPENAME",
                     baseUnit: "BASEUNITS.#text",
                     partyLedgerName: "PARTYLEDGERNAME.#text",
-                    batches: [{
-                        "list": "BATCHALLOCATIONS.LIST",
+                    voucherNumber: "VOUCHERNUMBER",
+                    reference: "REFERENCE.#text",
+                    isDeemedPositive: "ISDEEMEDPOSITIVE.#text",
+                    isInvoice: "ISINVOICE",
+                    masterID: "MASTERID.#text",
+                    voucherKey: "VOUCHERKEY.#text",
+                    amount: "AMOUNT.#text",
+                    vchType: "@_VCHTYPE",
+                    inventoryEntries: [{
+                        "list": "ALLINVENTORYENTRIES.LIST",
                         "item": {
-                            godownName: "GODOWNNAME.#text",
-                            batchName: "BATCHNAME",
-                            openingBalance: "OPENINGBALANCE",
-                            openingValue: "OPENINGVALUE",
-                            openingRate: "OPENINGRATE"
+                            stockItemName: "STOCKITEMNAME",
+                            rate: "RATE",
+                            amount: "AMOUNT",
+                            actualQty: "ACTUALQTY",
+                            billedQty: "BILLEDQTY"
                         }
                     }]
                 }
@@ -29,7 +39,7 @@ var transformation = {
     }
 };
 
-const output = nodeJsonTransformer.transform(periodJson, transformation);
+const output = nodeJsonTransformer.transform(periodJson, transformJson);
 
 console.log(JSON.stringify(output, null, 4));
 
