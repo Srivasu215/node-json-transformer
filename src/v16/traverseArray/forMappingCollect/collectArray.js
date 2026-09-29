@@ -1,6 +1,6 @@
-import { isNonEmptyArray } from "../resolve.js";
-import { resolveValue } from "../value.js";
-import traverseObject from "../traverseObject.js";
+import { isNonEmptyArray } from "../../resolve.js";
+import { resolveValue } from "../../value.js";
+import traverseObject from "../../traverseObject.js";
 
 const startFunc = (items, source, context) => {
     const result = [];
