@@ -1,10 +1,6 @@
 import { resolveValue } from "./value.js";
-
 import traverseArray from "./traverseArray.js";
 import extractArrayIndex from "./extractArrayIndex.js";
-
-import traverseObject from "./traverseObject.js";
-
 /*
  * Mapping traversal decides what the current mapping node means.
  * It never searches the source by itself; source lookup belongs to resolve.js.
@@ -22,21 +18,21 @@ const traverse = (mapping, source, context) => {
 
     if (typeof mapping.flat !== "undefined") {
         const extracted = extractArrayIndex(mapping.flat, source);
-        return traverseObject(mapping.item, extracted, context);
+        return startFunc(mapping.item, extracted, context);
     }
 
     if (typeof mapping.item !== "undefined") {
-        return traverseObject(mapping.item, source, context);
+        return startFunc(mapping.item, source, context);
     }
 
-    return traverseObject(mapping, source, context);
+    return startFunc(mapping, source, context);
 };
 
 /*
  * An object mapping defines the output keys. Each instruction tells us how
  * to obtain that output value.
  */
-const traverseObject1 = (mapping, source, context) => {
+const startFunc = (mapping, source, context) => {
     const result = {};
 
     Object.keys(mapping).forEach((outputKey) => {
@@ -65,4 +61,4 @@ const traverseObject1 = (mapping, source, context) => {
     return result;
 };
 
-export { traverse };
+export default startFunc;
