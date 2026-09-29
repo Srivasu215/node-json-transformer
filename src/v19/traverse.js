@@ -8,7 +8,7 @@ import traverseObject from "./traverseObject.js";
  * It never searches the source by itself; source lookup belongs to resolve.js.
  */
 const traverse = (mapping, source, context) => {
-    console.log("aaaaaa : ", mapping);
+    // console.log("aaaaaa : ", mapping);
 
     if (
         typeof mapping.list !== "undefined" ||
