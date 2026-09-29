@@ -1,0 +1,77 @@
+{
+  "STOCKITEM": [
+    {
+      "BASEUNITS": {
+        "#text": "kgs",
+        "@_TYPE": "String"
+      },
+      "HASMFGDATE": {
+        "#text": "No",
+        "@_TYPE": "Logical"
+      },
+      "BATCHALLOCATIONS.LIST": {
+        "MFDON": "",
+        "GODOWNNAME": "Main Location",
+        "BATCHNAME": "Navratan-Rs.1210/-",
+        "OPENINGBALANCE": "-9.250 kgs",
+        "OPENINGVALUE": 11100,
+        "OPENINGRATE": "1200.00/kgs",
+        "EXPIRYPERIOD": ""
+      },
+      "@_NAME": "0.09/30mm",
+      "@_RESERVEDNAME": ""
+    },
+    {
+      "BASEUNITS": {
+        "#text": "kgs",
+        "@_TYPE": "String"
+      },
+      "BATCHALLOCATIONS.LIST": "",
+      "@_NAME": "0.14/30mm",
+      "@_RESERVEDNAME": ""
+    },
+    {
+      "BASEUNITS": {
+        "#text": "kgs",
+        "@_TYPE": "String"
+      },
+      "HASMFGDATE": {
+        "#text": "No",
+        "@_TYPE": "Logical"
+      },
+      "BATCHALLOCATIONS.LIST": [
+        {
+          "MFDON": "",
+          "GODOWNNAME": "Main Location",
+          "BATCHNAME": "100md-Green-Aaron-Rs.795/-",
+          "OPENINGBALANCE": "33.200 kgs",
+          "OPENINGVALUE": -25896,
+          "OPENINGRATE": "780.00/kgs",
+          "EXPIRYPERIOD": ""
+        },
+        {
+          "MFDON": "",
+          "GODOWNNAME": "Main Location",
+          "BATCHNAME": "100md-UB-Indo-Rs.860/-",
+          "OPENINGBALANCE": "46.806 kgs",
+          "OPENINGVALUE": -39786.5,
+          "OPENINGRATE": "850.03/kgs",
+          "EXPIRYPERIOD": ""
+        },
+        {
+          "MFDON": "",
+          "GODOWNNAME": "Main Location",
+          "BATCHNAME": "Anchor-Saif-100md-Rs.1165/-",
+          "OPENINGBALANCE": "-1.560 kgs",
+          "OPENINGVALUE": 1794,
+          "OPENINGRATE": "1150.00/kgs",
+          "EXPIRYPERIOD": ""
+        }
+      ],
+      "@_NAME": "0.14/34mm",
+      "@_RESERVEDNAME": ""
+    }
+  ],
+  "@_ISMSTDEPTYPE": "Yes",
+  "@_MSTDEPTYPE": "512"
+}
