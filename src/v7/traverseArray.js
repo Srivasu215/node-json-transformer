@@ -1,7 +1,6 @@
 import { IDENTIFIERS } from "./constants.js";
 import { resolvePath, isNonEmptyArray } from "./resolve.js";
 import { resolveValue } from "./value.js";
-import traverseArray from "./traverseArray.js";
 
 const extractArrayIndex = (key, source) => {
     if (!key.includes(IDENTIFIERS.ARRAY_INDEX)) return {};
@@ -27,7 +26,7 @@ const traverse = (mapping, source, context) => {
         typeof mapping.objectify !== "undefined" ||
         typeof mapping.collect !== "undefined"
     ) {
-        return traverseArray(mapping, source, context);
+        return startFunc(mapping, source, context);
     }
 
     if (typeof mapping.flat !== "undefined") {
@@ -63,7 +62,7 @@ const traverseObject = (mapping, source, context) => {
         }
 
         if (Array.isArray(instruction) && instruction.length > 0) {
-            result[outputKey] = traverseArray(instruction[0], source, context);
+            result[outputKey] = startFunc(instruction[0], source, context);
             return;
         }
 
@@ -92,7 +91,7 @@ const collectArray = (items, source, context) => {
         }
 
         if (Array.isArray(instruction)) {
-            result.push(...traverseArray(instruction[0], source, context));
+            result.push(...startFunc(instruction[0], source, context));
             return;
         }
 
@@ -108,9 +107,9 @@ const collectArray = (items, source, context) => {
  * Array mappings first locate the source collection and then reuse the same
  * object traversal for every selected item.
  */
-const traverseArray1 = (mapping, source, context) => {
+const startFunc = (mapping, source, context) => {
     let sourceArray;
-    console.log("aaaaaa : ", mapping);
+    // console.log("aaaaaa : ", mapping);
     if (typeof mapping.list !== "undefined") {
         const key = mapping.list;
         if (
@@ -134,4 +133,4 @@ const traverseArray1 = (mapping, source, context) => {
     });
 };
 
-export { traverse, traverseObject, extractArrayIndex };
+export default startFunc;
