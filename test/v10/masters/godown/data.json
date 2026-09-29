@@ -1,0 +1,26 @@
+{
+  "GODOWN": [
+    {
+      "@_NAME": "Main Location",
+      "@_RESERVEDNAME": ""
+    },
+    {
+      "@_NAME": "Nalam Godown",
+      "@_RESERVEDNAME": ""
+    },
+    {
+      "@_NAME": "N Chinna Godown",
+      "@_RESERVEDNAME": ""
+    },
+    {
+      "@_NAME": "P House",
+      "@_RESERVEDNAME": ""
+    },
+    {
+      "@_NAME": "Stairs Godown",
+      "@_RESERVEDNAME": ""
+    }
+  ],
+  "@_ISMSTDEPTYPE": "Yes",
+  "@_MSTDEPTYPE": "64"
+}

@@ -1,0 +1,14 @@
+{
+    "mapping": {
+        "item": {
+            "godownNames": [
+                {
+                    "list": "GODOWN",
+                    "item": {
+                        "godownName": "@_NAME"
+                    }
+                }
+            ]
+        }
+    }
+}
