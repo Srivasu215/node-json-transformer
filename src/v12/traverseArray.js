@@ -72,7 +72,7 @@ const collectArray = (items, source, context) => {
  * Array mappings first locate the source collection and then reuse the same
  * object traversal for every selected item.
  */
-const startFunc = (mapping, source, context) => {
+const startFunc1 = (mapping, source, context) => {
     let sourceArray;
     // console.log("aaaaaa : ", mapping);
     // console.log("aaaaaa : ", mapping, source, context);
@@ -124,6 +124,64 @@ const startFunc = (mapping, source, context) => {
     return sourceArray.map((item) => {
         return traverseObject(mapping.item, item, context);
     });
+};
+
+const startFunc = (mapping, source, context) => {
+    let sourceArray;
+
+    if (typeof mapping.list !== "undefined") {
+        const key = mapping.list;
+
+        if (
+            key.startsWith(IDENTIFIERS.ARRAY_INDEX) &&
+            key.includes(IDENTIFIERS.ARRAY_START) &&
+            key.includes(IDENTIFIERS.ARRAY_END)
+        ) {
+            const fromObject = traverseObject(
+                Array.isArray(mapping.item)
+                    ? mapping.item[0]
+                    : mapping.item,
+                source,
+                context
+            );
+
+            return [fromObject];
+        }
+
+        sourceArray = resolvePath(key, source);
+
+    } else if (typeof mapping.objectify !== "undefined") {
+        sourceArray = [resolvePath(mapping.objectify, source)];
+
+    } else if (typeof mapping.collect !== "undefined") {
+        return collectArray(mapping.item, source, context);
+    }
+
+    const itemMapping = Array.isArray(mapping.item)
+        ? mapping.item[0]
+        : mapping.item;
+
+    if (Array.isArray(sourceArray)) {
+        return sourceArray.map((item) => {
+            return traverseObject(
+                itemMapping,
+                item,
+                context
+            );
+        });
+    }
+
+    if (isPlainObject(sourceArray)) {
+        return [
+            traverseObject(
+                itemMapping,
+                sourceArray,
+                context
+            )
+        ];
+    }
+
+    return [];
 };
 
 export default startFunc;
