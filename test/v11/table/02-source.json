@@ -1,0 +1,11 @@
+{
+  "columns": [
+    { "title": "Name" },
+    { "title": "Amount" }
+  ],
+  "rows": [
+    { "name": "Laptop", "amount": 1200 },
+    { "name": "Phone", "amount": 800 },
+    { "name": "Tablet", "amount": 500 }
+  ]
+}

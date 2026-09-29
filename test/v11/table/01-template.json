@@ -1,0 +1,70 @@
+{
+  "mapping": {
+    "tagName": "$table",
+    "attributes": {
+      "class": "$table table-hover table-striped align-middle border mb-0"
+    },
+    "children": [
+      {
+        "collect": true,
+        "item": [
+          {
+            "tagName": "$thead",
+            "attributes": {
+              "class": "$table-light"
+            },
+            "children": [
+              {
+                "objectify": "",
+                "item": {
+                  "tagName": "$tr",
+                  "children": [
+                    {
+                      "list": "columns",
+                      "item": {
+                        "tagName": "$th",
+                        "textContent": "title",
+                        "attributes": {
+                          "class": "$text-start"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "tagName": "$tbody",
+            "children": [
+              {
+                "list": "rows",
+                "item": {
+                  "tagName": "$tr",
+                  "children": [
+                    {
+                      "collect": true,
+                      "item": [
+                        {
+                          "tagName": "$td",
+                          "textContent": "name"
+                        },
+                        {
+                          "tagName": "$td",
+                          "textContent": "amount",
+                          "attributes": {
+                            "class": "$text-end font-monospace"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

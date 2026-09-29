@@ -1,0 +1,21 @@
+{
+  "mapping": {
+    "tagName": "$select",
+    "attributes": {
+      "id": "$LedgerName",
+      "class": "$keshav"
+    },
+    "children": [
+      {
+        "list": "LedgerName",
+        "item": {
+          "tagName": "$option",
+          "attributes": {
+            "value": "${}"
+          },
+          "textContent": "${}"
+        }
+      }
+    ]
+  }
+}
