@@ -1,11 +1,12 @@
 import { resolveValue } from "./value.js";
 import traverseArray from "./traverseArray.js";
 import extractArrayIndex from "./extractArrayIndex.js";
+import { traverse } from "./traverse.js";
 /*
  * Mapping traversal decides what the current mapping node means.
  * It never searches the source by itself; source lookup belongs to resolve.js.
  */
-const traverse = (mapping, source, context) => {
+const traverse1 = (mapping, source, context) => {
     // console.log("aaaaaa : ", mapping);
 
     if (
