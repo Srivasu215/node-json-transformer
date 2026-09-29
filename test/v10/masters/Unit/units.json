@@ -1,0 +1,22 @@
+{
+  "UNIT": [
+    {
+      "@_NAME": "kgs",
+      "@_RESERVEDNAME": ""
+    },
+    {
+      "@_NAME": "mtr",
+      "@_RESERVEDNAME": ""
+    },
+    {
+      "@_NAME": "Nos",
+      "@_RESERVEDNAME": ""
+    },
+    {
+      "@_NAME": "sft",
+      "@_RESERVEDNAME": ""
+    }
+  ],
+  "@_ISMSTDEPTYPE": "Yes",
+  "@_MSTDEPTYPE": "4096"
+}
