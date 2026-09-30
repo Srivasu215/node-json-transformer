@@ -54,6 +54,102 @@
       margin: 0 auto;
     }
 
+    /* Top Nav Bar */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(12px);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--accent);
+    }
+
+    .nav-link.active {
+      color: var(--accent);
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-workbench {
+      background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
+      color: #04101e;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: 0 0 16px var(--accent-glow);
+      transition: all 0.2s ease;
+    }
+
+    .btn-workbench:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-workbench.active {
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.6);
+      outline: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
     header {
       text-align: center;
       margin-bottom: 1rem;
@@ -345,6 +441,32 @@
 <body>
 
   <div class="container">
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <a href="index.html" class="nav-brand">
+        <span>🔮</span> node-json-transformer
+        <span class="nav-badge">Live Workbench</span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="nav-link">
+          <span>📖</span> How It Works
+        </a>
+        <a href="examples.html" class="nav-link">
+          <span>💡</span> 11 Examples
+        </a>
+        <a href="cdn.html" class="nav-link">
+          <span>📦</span> CDN Guide
+        </a>
+        <a href="workbench.html" class="btn-workbench active" title="Open the Live Browser Workbench">
+          <span>🚀</span> Live Workbench
+        </a>
+        <a href="https://github.com/keshavsoft/node-json-transformer" target="_blank" class="nav-link">
+          <span>📂</span> GitHub
+        </a>
+      </div>
+    </nav>
+
     <!-- Header -->
     <header>
       <h1>Node Transformer</h1>

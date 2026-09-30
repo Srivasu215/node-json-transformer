@@ -113,6 +113,12 @@
       border-color: var(--accent);
     }
 
+    .nav-link.active {
+      color: var(--accent);
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
     .btn-workbench {
       background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
       color: #04101e;
@@ -432,20 +438,23 @@
     <nav class="top-nav">
       <a href="index.html" class="nav-brand">
         <span>🔮</span> node-json-transformer
-        <span class="nav-badge">Unified Engine</span>
+        <span class="nav-badge">CDN Guide</span>
       </a>
       <div class="nav-actions">
         <a href="index.html" class="nav-link">
           <span>📖</span> How It Works
         </a>
-        <a href="examples.html" class="nav-link" style="color: var(--accent-purple); border-color: rgba(192, 132, 252, 0.3);">
+        <a href="examples.html" class="nav-link">
           <span>💡</span> 11 Examples
         </a>
-        <a href="workbench.html" class="btn-workbench">
-          <span>🚀</span> Test Code in Workbench
+        <a href="cdn.html" class="nav-link active">
+          <span>📦</span> CDN Guide
+        </a>
+        <a href="workbench.html" class="btn-workbench" title="Open the Live Browser Workbench">
+          <span>🚀</span> Live Workbench
         </a>
         <a href="https://github.com/keshavsoft/node-json-transformer" target="_blank" class="nav-link">
-          <span>📂</span> GitHub Repo
+          <span>📂</span> GitHub
         </a>
       </div>
     </nav>
@@ -698,8 +707,8 @@ console.log(result);</pre>
 
   <!-- Interactive Logic & Live Runner -->
   <script type="module">
-    // Direct import of node-json-transformer engine
-    import { transform } from "./../src/index.js";
+    // Direct import of node-json-transformer engine via jsDelivr CDN
+    import { transform } from "https://cdn.jsdelivr.net/gh/keshavsoft/node-json-transformer@main/src/index.js";
 
     // Copy to clipboard helper
     window.copySnippet = function(elementId, btn) {

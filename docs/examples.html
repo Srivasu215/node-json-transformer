@@ -113,6 +113,12 @@
       border-color: var(--accent);
     }
 
+    .nav-link.active {
+      color: var(--accent);
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
     .btn-workbench {
       background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
       color: #04101e;
@@ -516,10 +522,13 @@
         <a href="index.html" class="nav-link">
           <span>📖</span> How It Works
         </a>
+        <a href="examples.html" class="nav-link active">
+          <span>💡</span> 11 Examples
+        </a>
         <a href="cdn.html" class="nav-link">
           <span>📦</span> CDN Guide
         </a>
-        <a href="workbench.html" class="btn-workbench">
+        <a href="workbench.html" class="btn-workbench" title="Open the Live Browser Workbench">
           <span>🚀</span> Live Workbench
         </a>
         <a href="https://github.com/keshavsoft/node-json-transformer" target="_blank" class="nav-link">
@@ -658,9 +667,9 @@
 
   </div>
 
-  <!-- Interactive Runner & Examples Catalog -->
+  <!-- Interactive Runner & Examples Catalog (Loaded via jsDelivr CDN) -->
   <script type="module">
-    import { transform } from "./../src/index.js";
+    import { transform } from "https://cdn.jsdelivr.net/gh/keshavsoft/node-json-transformer@main/src/index.js";
 
     // Progressive Examples Catalog based on docs/examples/*.md
     const examples = [
