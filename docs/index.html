@@ -410,6 +410,9 @@
         <span class="nav-badge">Architecture &amp; Docs</span>
       </a>
       <div class="nav-actions">
+        <a href="examples.html" class="btn-github" style="color: var(--accent-purple); border-color: rgba(192, 132, 252, 0.4);">
+          <span>💡</span> 11 Examples
+        </a>
         <a href="cdn.html" class="btn-github" style="color: var(--accent); border-color: rgba(56, 189, 248, 0.3);">
           <span>📦</span> CDN Guide
         </a>
@@ -426,11 +429,14 @@
     <header class="hero">
       <h1>How Node Transformer Works</h1>
       <p class="hero-subtitle">
-        A single-pass recursive engine that separates data from output structure. It takes any raw JSON or XML-derived payload, resolves dotted paths, renames keys, and builds clean schema contracts declaratively.
+        A single-pass recursive engine that separates raw input data from output structure. It takes any raw JSON or XML-derived payload, resolves dotted paths, renames keys, and builds clean schema contracts declaratively.
       </p>
-      <div>
+      <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
         <a href="workbench.html" class="btn-workbench" style="font-size: 0.95rem; padding: 0.65rem 1.4rem;">
           <span>🚀</span> Go to Live Workbench &amp; Test Code
+        </a>
+        <a href="examples.html" class="btn-github" style="font-size: 0.95rem; padding: 0.65rem 1.4rem; color: var(--accent-purple); border-color: rgba(192, 132, 252, 0.4);">
+          <span>💡</span> Explore 11 Progressive Examples
         </a>
       </div>
     </header>
@@ -440,28 +446,28 @@
       <div class="section-header">
         <div class="section-icon">🧩</div>
         <div>
-          <div class="section-title">The Two-Document Model</div>
+          <div class="section-title">The Two-Document Model: Source &amp; Guide</div>
           <div class="section-desc">The core architectural concept behind node-json-transformer.</div>
         </div>
       </div>
 
       <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem;">
-        Instead of writing imperative transformation logic (loops, nested checks, property assignments), Node Transformer evaluates two documents: the <strong>Source Data</strong> and the <strong>Transformation Recipe</strong>. The recipe describes the exact output shape you want to construct.
+        Instead of writing imperative transformation logic (loops, nested checks, object mutations), Node Transformer evaluates two pure documents: the <strong>Source JSON</strong> and the <strong>Guide JSON</strong>.
       </p>
 
       <div class="pipeline-diagram">
         <div class="diagram-box">
           <div class="diagram-tag" style="color: #38bdf8;">Document 1</div>
           <div class="diagram-title">Source JSON</div>
-          <div class="diagram-desc">Raw input payload with enterprise, legacy, or XML-like keys (e.g. dotted keys, arbitrary nesting).</div>
+          <div class="diagram-desc">Raw input payload with enterprise, legacy, or XML-derived keys (e.g. dotted keys, arbitrary nesting).</div>
         </div>
 
         <div class="diagram-arrow">➔</div>
 
         <div class="diagram-box">
           <div class="diagram-tag" style="color: #c084fc;">Document 2</div>
-          <div class="diagram-title">Transformation Recipe</div>
-          <div class="diagram-desc">Declarative contract. Output keys belong to the recipe; values specify source path instructions.</div>
+          <div class="diagram-title">Guide JSON</div>
+          <div class="diagram-desc">Declarative contract. Output keys belong to the Guide; values specify source path instructions.</div>
         </div>
 
         <div class="diagram-arrow">➔</div>
@@ -474,7 +480,7 @@
       </div>
 
       <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.88rem; color: #bae6fd;">
-        💡 <strong>Key Principle:</strong> Output keys belong entirely to the transformation recipe. The source is only queried when a value needs to be retrieved.
+        💡 <strong>Key Principle:</strong> The <em>Source</em> holds the data. The <em>Guide</em> holds the shape. Output keys belong entirely to the Guide, and the Source is only queried when a value needs to be retrieved.
       </div>
     </section>
 

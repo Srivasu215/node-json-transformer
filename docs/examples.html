@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progressive Examples — Node Transformer Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #070a12;
+      --card-bg: rgba(16, 24, 40, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --accent-green: #34d399;
+      --accent-purple: #c084fc;
+      --accent-amber: #fbbf24;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --code-bg: #030712;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 1.25rem;
+      background-image:
+        radial-gradient(ellipse 90% 50% at 50% -10%, rgba(56, 189, 248, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(192, 132, 252, 0.07), transparent),
+        radial-gradient(ellipse 60% 40% at 0% 80%, rgba(52, 211, 153, 0.07), transparent);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Top Nav Bar */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      margin-bottom: 1.75rem;
+      backdrop-filter: blur(12px);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      background: rgba(192, 132, 252, 0.15);
+      border: 1px solid rgba(192, 132, 252, 0.3);
+      color: var(--accent-purple);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--accent);
+    }
+
+    .btn-workbench {
+      background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
+      color: #04101e;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: 0 0 16px var(--accent-glow);
+      transition: all 0.2s ease;
+    }
+
+    .btn-workbench:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Hero */
+    header.hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Story Card: 2 Document Model */
+    .story-banner {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(192, 132, 252, 0.08) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .story-left {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .story-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .story-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .story-pillars {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .pillar-chip {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.82rem;
+    }
+
+    .pillar-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.2rem;
+    }
+
+    .pillar-name {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* Main Layout: Sidebar & Content */
+    .examples-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .examples-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sidebar Selector */
+    .sidebar-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1rem;
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 1.5rem;
+    }
+
+    .sidebar-header {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      padding-left: 0.5rem;
+    }
+
+    .example-btn {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .example-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+    }
+
+    .example-btn.active {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .btn-num {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    /* Example Details Card */
+    .example-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      backdrop-filter: blur(16px);
+    }
+
+    .example-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .example-title-area h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .example-category {
+      display: inline-block;
+      margin-top: 0.3rem;
+      font-size: 0.82rem;
+      color: var(--accent-purple);
+      font-weight: 600;
+    }
+
+    .action-controls {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-control {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-control:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+    }
+
+    .btn-run-ex {
+      background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
+      color: #04101e;
+      border: none;
+      font-weight: 700;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .btn-run-ex:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+
+    /* 3-Column Code Comparison */
+    .code-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 1100px) {
+      .code-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .code-panel {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .code-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0.9rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .code-panel-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-mini-copy {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-mini-copy:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .code-display {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      padding: 1rem;
+      margin: 0;
+      overflow-x: auto;
+      max-height: 460px;
+      line-height: 1.5;
+      flex: 1;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Story & Analysis Box */
+    .analysis-card {
+      background: rgba(56, 189, 248, 0.04);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .analysis-header {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .analysis-content {
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .analysis-content ul {
+      margin-top: 0.5rem;
+      padding-left: 1.25rem;
+    }
+
+    .analysis-content li {
+      margin-bottom: 0.35rem;
+    }
+
+    .analysis-content code {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    /* Bottom Stepper Nav */
+    .pagination-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <a href="index.html" class="nav-brand">
+        <span>🔮</span> node-json-transformer
+        <span class="nav-badge">Progressive Examples</span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="nav-link">
+          <span>📖</span> How It Works
+        </a>
+        <a href="cdn.html" class="nav-link">
+          <span>📦</span> CDN Guide
+        </a>
+        <a href="workbench.html" class="btn-workbench">
+          <span>🚀</span> Live Workbench
+        </a>
+        <a href="https://github.com/keshavsoft/node-json-transformer" target="_blank" class="nav-link">
+          <span>📂</span> GitHub
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+      <h1>Progressive Transformation Examples</h1>
+      <p class="hero-subtitle">
+        Learn declarative transformation step-by-step. Each example clearly separates the <strong>Source JSON</strong> from the <strong>Guide JSON</strong>, executes live in your browser, and explains the traversal engine story.
+      </p>
+    </header>
+
+    <!-- Two Document Concept Banner -->
+    <div class="story-banner">
+      <div class="story-left">
+        <div class="story-title">
+          <span>💡</span> The Core Principle: Source &amp; Guide
+        </div>
+        <div class="story-desc">
+          Instead of writing procedural code with loops and conditionals, you provide two pure JSON documents. The engine applies the <strong>Guide</strong> to extract and normalize data from the <strong>Source</strong>.
+        </div>
+      </div>
+      <div class="story-pillars">
+        <div class="pillar-chip">
+          <div class="pillar-tag" style="color: var(--accent);">Document 1</div>
+          <div class="pillar-name">Source JSON (Data)</div>
+        </div>
+        <div class="pillar-chip">
+          <div class="pillar-tag" style="color: var(--accent-purple);">Document 2</div>
+          <div class="pillar-name">Guide JSON (Shape)</div>
+        </div>
+        <div class="pillar-chip">
+          <div class="pillar-tag" style="color: var(--accent-green);">Result</div>
+          <div class="pillar-name">Contract Output</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Layout: Sidebar & Content -->
+    <div class="examples-layout">
+
+      <!-- Left Sidebar: Example Selector -->
+      <aside class="sidebar-card">
+        <div class="sidebar-header">Progressive Curriculum</div>
+        <div id="exampleList">
+          <!-- Dynamically Rendered by JS -->
+        </div>
+      </aside>
+
+      <!-- Right Main: Active Example Display -->
+      <main class="example-card">
+
+        <div class="example-meta">
+          <div class="example-title-area">
+            <h2 id="exTitle">Loading Example...</h2>
+            <span class="example-category" id="exCategory">Category</span>
+          </div>
+          <div class="action-controls">
+            <button class="btn-control btn-run-ex" id="btnRunExample">
+              <span>▶</span> Run Live
+            </button>
+            <a href="workbench.html" class="btn-control" id="btnSendToWorkbench" title="Test and customize this in the full Workbench">
+              <span>🚀</span> Test in Workbench
+            </a>
+          </div>
+        </div>
+
+        <!-- 3-Column Visual Grid -->
+        <div class="code-grid">
+          <!-- Column 1: Source JSON -->
+          <div class="code-panel">
+            <div class="code-panel-header">
+              <span class="code-panel-title" style="color: #38bdf8;">
+                <span>📄</span> 1. Source JSON (Input)
+              </span>
+              <button class="btn-mini-copy" onclick="copyCode('srcCode', this)">Copy</button>
+            </div>
+            <pre class="code-display" id="srcCode"></pre>
+          </div>
+
+          <!-- Column 2: Guide JSON -->
+          <div class="code-panel">
+            <div class="code-panel-header">
+              <span class="code-panel-title" style="color: #c084fc;">
+                <span>📜</span> 2. Guide JSON (Recipe)
+              </span>
+              <button class="btn-mini-copy" onclick="copyCode('guideCode', this)">Copy</button>
+            </div>
+            <pre class="code-display" id="guideCode"></pre>
+          </div>
+
+          <!-- Column 3: Result Output -->
+          <div class="code-panel">
+            <div class="code-panel-header">
+              <span class="code-panel-title" style="color: #34d399;">
+                <span>✨</span> 3. Transformed Output
+              </span>
+              <button class="btn-mini-copy" onclick="copyCode('outCode', this)">Copy</button>
+            </div>
+            <pre class="code-display" id="outCode"></pre>
+          </div>
+        </div>
+
+        <!-- Story & Deep Analysis -->
+        <div class="analysis-card">
+          <div class="analysis-header">
+            <span>🔍</span> Architectural Story &amp; Output Analysis
+          </div>
+          <div class="analysis-content" id="analysisContent">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Bottom Pagination -->
+        <div class="pagination-row">
+          <button class="btn-control" id="btnPrev">
+            <span>←</span> Previous
+          </button>
+          <span style="font-size: 0.85rem; color: var(--text-muted);" id="pageCounter">1 of 11</span>
+          <button class="btn-control" id="btnNext">
+            Next <span>→</span>
+          </button>
+        </div>
+
+      </main>
+
+    </div>
+
+    <footer>
+      node-json-transformer &mdash; Powered by KeshavSoft &bull; Declarative Data Pipeline Engine.
+    </footer>
+
+  </div>
+
+  <!-- Interactive Runner & Examples Catalog -->
+  <script type="module">
+    import { transform } from "./../src/index.js";
+
+    // Progressive Examples Catalog based on docs/examples/*.md
+    const examples = [
+      {
+        id: "ex01",
+        num: "01",
+        title: "Small Object: Renaming & Output Shape",
+        category: "Basic Object Mapping",
+        source: {
+          "name": "Keshav",
+          "city": "Yamuna Nagar"
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "customerName": "name",
+              "customerCity": "city"
+            }
+          }
+        },
+        story: `
+          <p>The smallest and most fundamental concept:</p>
+          <ul>
+            <li><strong>Output keys belong 100% to the Guide:</strong> <code>customerName</code> and <code>customerCity</code> are created because they exist in the Guide.</li>
+            <li><strong>Source paths are queries:</strong> <code>"name"</code> and <code>"city"</code> instruct the engine where to retrieve values from the Source.</li>
+            <li><strong>No key leaking:</strong> Raw source keys never automatically leak into the output unless mapped.</li>
+          </ul>
+        `
+      },
+      {
+        id: "ex02",
+        num: "02",
+        title: "Large Source, Small Output: Whitelisting",
+        category: "Filtering & Security",
+        source: {
+          "id": 1001,
+          "name": "Keshav",
+          "city": "Yamuna Nagar",
+          "phone": "9999999999",
+          "internalCode": "SECRET_KEY_123",
+          "unusedField": "remove me"
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "id": "id",
+              "name": "name",
+              "city": "city"
+            }
+          }
+        },
+        story: `
+          <p>The Guide operates as an explicit schema whitelist:</p>
+          <ul>
+            <li>The Source contains sensitive and legacy keys (<code>internalCode</code>, <code>phone</code>, <code>unusedField</code>).</li>
+            <li>By omitting them from the Guide, they are automatically eliminated without writing manual delete/pick instructions.</li>
+            <li>This produces a clean, safe public contract for frontend clients or third-party APIs.</li>
+          </ul>
+        `
+      },
+      {
+        id: "ex03",
+        num: "03",
+        title: "Object to Object: Structure Reshaping",
+        category: "Nesting & Hierarchy",
+        source: {
+          "firstName": "Keshav",
+          "city": "Yamuna Nagar",
+          "age": 40
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "person": {
+                "item": {
+                  "name": "firstName",
+                  "location": "city"
+                }
+              },
+              "age": "age"
+            }
+          }
+        },
+        story: `
+          <p>The Guide can create new nested hierarchy from flat data:</p>
+          <ul>
+            <li>The incoming Source was completely flat at the root level.</li>
+            <li>The Guide declares a nested object <code>person</code> with an <code>item</code> instruction.</li>
+            <li>The engine traverses into <code>person</code> recursively, constructing structured domains from unstructured sources.</li>
+          </ul>
+        `
+      },
+      {
+        id: "ex04",
+        num: "04",
+        title: "Object to Array: Single Item Collection",
+        category: "Collection Shaping",
+        source: {
+          "id": 1001,
+          "name": "ROPE",
+          "amount": 260
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "items": [
+                {
+                  "list": "[]",
+                  "item": {
+                    "id": "id",
+                    "name": "name",
+                    "amount": "amount"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        story: `
+          <p>Uniform collection handling using <code>list: "[]"</code>:</p>
+          <ul>
+            <li>Often, downstream consumers require an array (e.g. table widgets or database inserts), but upstream APIs return a single object.</li>
+            <li>By using an array mapping with <code>list: "[]"</code>, the single source object is safely converted into a standard 1-element array.</li>
+          </ul>
+        `
+      },
+      {
+        id: "ex05",
+        num: "05",
+        title: "Array to Array: List Transformation",
+        category: "Array Traversal",
+        source: {
+          "items": [
+            { "name": "ROPE", "amount": 260 },
+            { "name": "CABLE", "amount": 540 }
+          ]
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "products": [
+                {
+                  "list": "items",
+                  "item": {
+                    "productName": "name",
+                    "amount": "amount"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        story: `
+          <p>Collection mapping with <code>list</code>:</p>
+          <ul>
+            <li><code>list: "items"</code> directs the engine to locate the array in the Source.</li>
+            <li>The nested <code>item</code> recipe is executed for every record in the array automatically.</li>
+            <li>Zero imperative loops, zero mutation, zero off-by-one errors.</li>
+          </ul>
+        `
+      },
+      {
+        id: "ex06",
+        num: "06",
+        title: "Array Inside Array: 2-Level Recursion",
+        category: "Nested Arrays",
+        source: {
+          "orders": [
+            {
+              "number": 1001,
+              "items": [
+                { "name": "ROPE", "amount": 260 },
+                { "name": "CABLE", "amount": 540 }
+              ]
+            },
+            {
+              "number": 1002,
+              "items": [
+                { "name": "MESH", "amount": 910 }
+              ]
+            }
+          ]
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "orders": [
+                {
+                  "list": "orders",
+                  "item": {
+                    "number": "number",
+                    "items": [
+                      {
+                        "list": "items",
+                        "item": {
+                          "product": "name",
+                          "amount": "amount"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        story: `
+          <p>Nesting collections within collections:</p>
+          <ul>
+            <li>The parent array rule resolves each <code>orders</code> record.</li>
+            <li>Inside each order, the inner array rule resolves that order's <code>items</code>.</li>
+            <li>There are no specialized "inner-array" operators; recursion guarantees infinite nesting using the same two primitives (<code>list</code> and <code>item</code>).</li>
+          </ul>
+        `
+      },
+      {
+        id: "ex07",
+        num: "07",
+        title: "Three Array Levels: Deep Hierarchy",
+        category: "Deep Recursion",
+        source: {
+          "companies": [
+            {
+              "name": "KeshavSoft",
+              "departments": [
+                {
+                  "name": "Engineering",
+                  "teams": [
+                    { "name": "Platform" },
+                    { "name": "Data" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "companies": [
+                {
+                  "list": "companies",
+                  "item": {
+                    "company": "name",
+                    "departments": [
+                      {
+                        "list": "departments",
+                        "item": {
+                          "department": "name",
+                          "teams": [
+                            {
+                              "list": "teams",
+                              "item": {
+                                "team": "name"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        story: `
+          <p>Scale without cognitive load:</p>
+          <ul>
+            <li><code>Company ➔ Department ➔ Team</code> represents 3 full levels of array depth.</li>
+            <li>Because mapping is recursive, writing 3 levels is just as simple and declarative as writing 1 level.</li>
+          </ul>
+        `
+      },
+      {
+        id: "ex08",
+        num: "08",
+        title: "Mixed Object & Array: Realistic Payload",
+        category: "Enterprise Structures",
+        source: {
+          "invoice": 1001,
+          "customer": {
+            "name": "Alpha Global Industries"
+          },
+          "items": [
+            {
+              "name": "Industrial Cable",
+              "batches": [
+                { "id": "LOT-1", "quantity": 10 },
+                { "id": "LOT-2", "quantity": 5 }
+              ]
+            }
+          ]
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "invoiceNumber": "invoice",
+              "customer": {
+                "item": {
+                  "name": "customer.name"
+                }
+              },
+              "items": [
+                {
+                  "list": "items",
+                  "item": {
+                    "product": "name",
+                    "batches": [
+                      {
+                        "list": "batches",
+                        "item": {
+                          "batchId": "id",
+                          "quantity": "quantity"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        story: `
+          <p>Real-world invoices combine multiple structural patterns:</p>
+          <ul>
+            <li>Scalar header attributes (<code>invoiceNumber</code>)</li>
+            <li>Single nested entity blocks (<code>customer</code> using dot path <code>"customer.name"</code>)</li>
+            <li>Line item collections containing nested sub-allocation batch arrays.</li>
+          </ul>
+        `
+      },
+      {
+        id: "ex09",
+        num: "09",
+        title: "Tally Dotted Keys: Literal vs Path Resolution",
+        category: "XML & Tally Solutions",
+        source: {
+          "ALLINVENTORYENTRIES.LIST": [
+            {
+              "STOCKITEMNAME": "ROPE",
+              "AMOUNT": 260
+            }
+          ]
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "items": [
+                {
+                  "list": "ALLINVENTORYENTRIES.LIST",
+                  "item": {
+                    "stockItem": "STOCKITEMNAME",
+                    "amount": "AMOUNT"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        story: `
+          <p>Solving the Tally XML dot problem:</p>
+          <ul>
+            <li>In XML converted to JSON, keys frequently contain literal periods: <code>ALLINVENTORYENTRIES.LIST</code>.</li>
+            <li>Standard JavaScript dot navigation (like Lodash <code>get</code>) breaks because it assumes <code>ALLINVENTORYENTRIES</code> is an object containing <code>LIST</code>.</li>
+            <li>The node-json-transformer path resolver checks if the full literal key exists first, allowing literal dotted keys and navigated dot paths to coexist effortlessly.</li>
+          </ul>
+        `
+      },
+      {
+        id: "ex10",
+        num: "10",
+        title: "Tally Voucher: One-or-Many Normalization",
+        category: "Enterprise Accounting",
+        source: {
+          "items": [
+            {
+              "DATE.#text": 20260908,
+              "VOUCHERNUMBER": 1949,
+              "ALLINVENTORYENTRIES.LIST": [
+                {
+                  "STOCKITEMNAME": "ROPE",
+                  "AMOUNT": 260,
+                  "BATCHALLOCATIONS.LIST": {
+                    "BATCHID.#text": 3543,
+                    "BATCHNAME": "Tuf-Rs.170",
+                    "AMOUNT": 260
+                  },
+                  "ACCOUNTINGALLOCATIONS.LIST": {
+                    "LEDGERNAME": "Sales",
+                    "AMOUNT": 260
+                  }
+                }
+              ],
+              "LEDGERENTRIES.LIST": {
+                "LEDGERNAME.#text": "K Eswara Rao",
+                "AMOUNT.#text": -260
+              }
+            }
+          ]
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "vouchers": [
+                {
+                  "list": "items",
+                  "item": {
+                    "date": "DATE.#text",
+                    "voucherNumber": "VOUCHERNUMBER",
+                    "items": [
+                      {
+                        "list": "ALLINVENTORYENTRIES.LIST",
+                        "item": {
+                          "stockItem": "STOCKITEMNAME",
+                          "amount": "AMOUNT",
+                          "batch": [
+                            {
+                              "list": "BATCHALLOCATIONS.LIST",
+                              "item": {
+                                "batchId": "BATCHID.#text",
+                                "batchName": "BATCHNAME",
+                                "amount": "AMOUNT"
+                              }
+                            }
+                          ],
+                          "accounting": [
+                            {
+                              "list": "ACCOUNTINGALLOCATIONS.LIST",
+                              "item": {
+                                "ledger": "LEDGERNAME",
+                                "amount": "AMOUNT"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "ledger": [
+                      {
+                        "list": "LEDGERENTRIES.LIST",
+                        "item": {
+                          "name": "LEDGERNAME.#text",
+                          "amount": "AMOUNT.#text"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        story: `
+          <p>Normalizing XML single-element polymorphism:</p>
+          <ul>
+            <li>In XML-to-JSON serializers, if there is 1 batch, it emits a single object. If there are 2 batches, it emits an array.</li>
+            <li>This causes catastrophic <code>TypeError: map is not a function</code> errors in frontend apps.</li>
+            <li>The Guide's <code>batch</code> array mapping automatically coerces single objects into 1-element arrays, guaranteeing a reliable contract.</li>
+          </ul>
+        `
+      },
+      {
+        id: "ex11",
+        num: "11",
+        title: "Complete Enterprise Voucher: Multi-Branch",
+        category: "Complete Production Shape",
+        source: {
+          "items": [
+            {
+              "DATE.#text": 20260908,
+              "VOUCHERNUMBER": 1949,
+              "PARTYLEDGERNAME": "Keshav Enterprises",
+              "ALLINVENTORYENTRIES.LIST": [
+                {
+                  "STOCKITEMNAME": "ROPE",
+                  "RATE": 130,
+                  "AMOUNT": 260,
+                  "BATCHALLOCATIONS.LIST": {
+                    "BATCHID.#text": 3543,
+                    "BATCHNAME": "Tuf-Rs.170",
+                    "GODOWNNAME": "Main Warehouse",
+                    "AMOUNT": 260,
+                    "ACTUALQTY": "2 Pcs",
+                    "BILLEDQTY": "2 Pcs",
+                    "BATCHRATE.#text": 130,
+                    "MFDON": 20260901
+                  },
+                  "ACCOUNTINGALLOCATIONS.LIST": {
+                    "LEDGERNAME": "Sales",
+                    "AMOUNT": 260
+                  }
+                }
+              ],
+              "LEDGERENTRIES.LIST": {
+                "LEDGERNAME.#text": "K Eswara Rao",
+                "AMOUNT.#text": -260
+              },
+              "ALLLEDGERENTRIES.LIST": [
+                {
+                  "LEDGERNAME": "CGST",
+                  "AMOUNT": 23.4
+                },
+                {
+                  "LEDGERNAME": "SGST",
+                  "AMOUNT": 23.4
+                }
+              ]
+            }
+          ]
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "vouchers": [
+                {
+                  "list": "items",
+                  "item": {
+                    "date": "DATE.#text",
+                    "voucherNumber": "VOUCHERNUMBER",
+                    "party": "PARTYLEDGERNAME",
+                    "items": [
+                      {
+                        "list": "ALLINVENTORYENTRIES.LIST",
+                        "item": {
+                          "stockItem": "STOCKITEMNAME",
+                          "rate": "RATE",
+                          "amount": "AMOUNT",
+                          "batch": [
+                            {
+                              "list": "BATCHALLOCATIONS.LIST",
+                              "item": {
+                                "batchId": "BATCHID.#text",
+                                "batchName": "BATCHNAME",
+                                "godown": "GODOWNNAME",
+                                "amount": "AMOUNT",
+                                "actualQty": "ACTUALQTY",
+                                "billedQty": "BILLEDQTY",
+                                "batchRate": "BATCHRATE.#text",
+                                "manufacturingDate": "MFDON"
+                              }
+                            }
+                          ],
+                          "accounting": [
+                            {
+                              "list": "ACCOUNTINGALLOCATIONS.LIST",
+                              "item": {
+                                "ledger": "LEDGERNAME",
+                                "amount": "AMOUNT"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "ledger": [
+                      {
+                        "list": "LEDGERENTRIES.LIST",
+                        "item": {
+                          "name": "LEDGERNAME.#text",
+                          "amount": "AMOUNT.#text"
+                        }
+                      }
+                    ],
+                    "taxLedgers": [
+                      {
+                        "list": "ALLLEDGERENTRIES.LIST",
+                        "item": {
+                          "name": "LEDGERNAME",
+                          "taxAmount": "AMOUNT"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        story: `
+          <p>Production architectural convergence:</p>
+          <ul>
+            <li><code>batch</code>, <code>accounting</code>, <code>ledger</code>, and <code>taxLedgers</code> are four branches in the same tree.</li>
+            <li>All four branches use the exact same recursive array mechanism without bespoke glue code.</li>
+            <li>This demonstrates how high-scale accounting, supply chain, and ERP pipelines can be completely configured through pure declarative JSON recipes.</li>
+          </ul>
+        `
+      }
+    ];
+
+    let currentIndex = 0;
+
+    // DOM Elements
+    const exampleListEl = document.getElementById("exampleList");
+    const exTitleEl = document.getElementById("exTitle");
+    const exCategoryEl = document.getElementById("exCategory");
+    const srcCodeEl = document.getElementById("srcCode");
+    const guideCodeEl = document.getElementById("guideCode");
+    const outCodeEl = document.getElementById("outCode");
+    const analysisContentEl = document.getElementById("analysisContent");
+    const pageCounterEl = document.getElementById("pageCounter");
+    const btnPrev = document.getElementById("btnPrev");
+    const btnNext = document.getElementById("btnNext");
+    const btnRunExample = document.getElementById("btnRunExample");
+    const btnSendToWorkbench = document.getElementById("btnSendToWorkbench");
+
+    // Render Sidebar List
+    function renderSidebar() {
+      exampleListEl.innerHTML = "";
+      examples.forEach((ex, idx) => {
+        const btn = document.createElement("button");
+        btn.className = `example-btn ${idx === currentIndex ? 'active' : ''}`;
+        btn.innerHTML = `
+          <span>${ex.title.split(':')[0]}</span>
+          <span class="btn-num">${ex.num}</span>
+        `;
+        btn.addEventListener("click", () => {
+          currentIndex = idx;
+          loadExample(currentIndex);
+        });
+        exampleListEl.appendChild(btn);
+      });
+    }
+
+    // Load & Display Example
+    function loadExample(index) {
+      const ex = examples[index];
+      if (!ex) return;
+
+      exTitleEl.textContent = `${ex.num}. ${ex.title}`;
+      exCategoryEl.textContent = ex.category;
+      srcCodeEl.textContent = JSON.stringify(ex.source, null, 2);
+      guideCodeEl.textContent = JSON.stringify(ex.guide, null, 2);
+      analysisContentEl.innerHTML = ex.story;
+      pageCounterEl.textContent = `${index + 1} of ${examples.length}`;
+
+      btnPrev.disabled = index === 0;
+      btnNext.disabled = index === examples.length - 1;
+
+      // Update sidebar active state
+      document.querySelectorAll(".example-btn").forEach((btn, idx) => {
+        btn.classList.toggle("active", idx === index);
+      });
+
+      // Execute live transform
+      executeLiveTransform(ex.source, ex.guide);
+    }
+
+    // Live Execution
+    function executeLiveTransform(source, guide) {
+      try {
+        const result = transform(source, guide);
+        outCodeEl.textContent = JSON.stringify(result, null, 2);
+        outCodeEl.style.color = "#34d399";
+      } catch (err) {
+        outCodeEl.textContent = "// Error: " + err.message;
+        outCodeEl.style.color = "#f87171";
+      }
+    }
+
+    // Navigation buttons
+    btnPrev.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        loadExample(currentIndex);
+      }
+    });
+
+    btnNext.addEventListener("click", () => {
+      if (currentIndex < examples.length - 1) {
+        currentIndex++;
+        loadExample(currentIndex);
+      }
+    });
+
+    btnRunExample.addEventListener("click", () => {
+      const ex = examples[currentIndex];
+      executeLiveTransform(ex.source, ex.guide);
+    });
+
+    // Send active example to Workbench
+    btnSendToWorkbench.addEventListener("click", () => {
+      const ex = examples[currentIndex];
+      localStorage.setItem("transformer_workbench_custom", JSON.stringify({
+        source: ex.source,
+        guide: ex.guide
+      }));
+    });
+
+    // Copy to clipboard helper
+    window.copyCode = function(elementId, btn) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = "✓ Copied";
+        setTimeout(() => btn.textContent = originalText, 1800);
+      });
+    };
+
+    // Initial Load
+    renderSidebar();
+    loadExample(0);
+  </script>
+</body>
+</html>

@@ -366,6 +366,9 @@
         <a href="index.html" class="btn-action" style="text-decoration: none; font-weight: 600; padding: 0.45rem 0.9rem; border-radius: 8px;">
           📖 How It Works
         </a>
+        <a href="examples.html" class="btn-action" style="text-decoration: none; font-weight: 600; padding: 0.45rem 0.9rem; border-radius: 8px; color: var(--accent);">
+          💡 11 Examples
+        </a>
         <a href="cdn.html" class="btn-action" style="text-decoration: none; font-weight: 600; padding: 0.45rem 0.9rem; border-radius: 8px;">
           📦 CDN Guide
         </a>
@@ -857,8 +860,21 @@
       navigator.clipboard.writeText(text).then(() => alert("Copied to clipboard!"));
     }
 
-    // Initial load
-    loadPreset("invoice");
+    // Initial load: check if sent from Examples page or load default
+    const customExample = localStorage.getItem("transformer_workbench_custom");
+    if (customExample) {
+      try {
+        const parsed = JSON.parse(customExample);
+        txtRawInput.value = JSON.stringify(parsed.source, null, 2);
+        txtTransformRecipe.value = JSON.stringify(parsed.guide, null, 2);
+        runPipeline();
+        localStorage.removeItem("transformer_workbench_custom");
+      } catch (err) {
+        loadPreset("invoice");
+      }
+    } else {
+      loadPreset("invoice");
+    }
   </script>
 </body>
 
