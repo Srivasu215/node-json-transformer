@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Object to Object Transformation — node-json-transformer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-milk: #fcfbf9;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --border-focus: #0284c7;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-blue: #0284c7;
+      --accent-purple: #7c3aed;
+      --accent-green: #059669;
+
+      /* Lite Dark Terminal Theme */
+      --terminal-bg: #1c2230;
+      --terminal-editor-bg: #151a24;
+      --terminal-header-bg: #11151e;
+      --terminal-gutter-bg: #11151e;
+      --terminal-gutter-border: rgba(255, 255, 255, 0.07);
+      --terminal-gutter-text: #64748b;
+      --terminal-border: #2d3748;
+      --terminal-border-focus: #38bdf8;
+      --terminal-text: #f1f5f9;
+      --terminal-text-output: #34d399;
+      --terminal-text-error: #f87171;
+      --terminal-btn-bg: rgba(255, 255, 255, 0.07);
+      --terminal-btn-border: rgba(255, 255, 255, 0.12);
+      --terminal-btn-color: #cbd5e1;
+      --terminal-btn-hover-bg: rgba(255, 255, 255, 0.16);
+      --terminal-btn-hover-color: #ffffff;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 18px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-milk);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+
+    /* Minimal Title Area (No Header Nav, Milk White canvas) */
+    .title-area {
+      margin-bottom: 1.75rem;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.3rem 0.85rem;
+      border-radius: 9999px;
+      background: #f1f5f9;
+      color: var(--accent-purple);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.025em;
+      margin-bottom: 0.35rem;
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 820px;
+    }
+
+    /* Presets & Quick Edit Buttons */
+    .quick-edit-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quick-edit-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-right: 0.25rem;
+    }
+
+    .chip-btn {
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #f8fafc;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .chip-btn:hover {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      transform: translateY(-1px);
+    }
+
+    /* Toolbar / Execution Bar */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .status-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .pill-status {
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .pill-status.error {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-color: #fca5a5;
+    }
+
+    .status-hint {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .btn {
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.55rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: #0f172a;
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      background: #1e293b;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--text-main);
+      border-color: var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    /* 3-Column Code Grid */
+    .code-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 1080px) {
+      .code-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sleek Lite Dark Editor Terminal Cards */
+    .code-card {
+      background: var(--terminal-bg);
+      border: 1px solid var(--terminal-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .code-card:focus-within {
+      border-color: var(--terminal-border-focus);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22), 0 12px 28px rgba(15, 23, 42, 0.16);
+    }
+
+    .code-card-header {
+      padding: 0.75rem 1rem;
+      background: var(--terminal-header-bg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Terminal window controls */
+    .terminal-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 0.45rem;
+    }
+
+    .terminal-dots .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .terminal-dots .dot-red { background: #ef4444; }
+    .terminal-dots .dot-yellow { background: #f59e0b; }
+    .terminal-dots .dot-green { background: #10b981; }
+
+    .code-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .badge-editable {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+    }
+
+    .badge-live {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .btn-action {
+      background: var(--terminal-btn-bg);
+      border: 1px solid var(--terminal-btn-border);
+      color: var(--terminal-btn-color);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 0.28rem 0.65rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .btn-action:hover {
+      background: var(--terminal-btn-hover-bg);
+      color: var(--terminal-btn-hover-color);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Editor Container with Synchronized Line Numbers */
+    .editor-container {
+      position: relative;
+      flex: 1;
+      display: flex;
+      min-height: 410px;
+      background: var(--terminal-editor-bg);
+    }
+
+    .line-gutter {
+      width: 44px;
+      background: var(--terminal-gutter-bg);
+      border-right: 1px solid var(--terminal-gutter-border);
+      color: var(--terminal-gutter-text);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      padding: 1rem 0.45rem 1rem 0.25rem;
+      text-align: right;
+      user-select: none;
+      pointer-events: none;
+      overflow: hidden;
+      white-space: pre;
+    }
+
+    textarea.code-editor {
+      flex: 1;
+      min-height: 410px;
+      font-family: 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.84rem;
+      padding: 1rem;
+      border: none;
+      outline: none;
+      resize: vertical;
+      background: transparent;
+      color: var(--terminal-text);
+      line-height: 1.6;
+      overflow-y: auto;
+      overflow-x: auto;
+      white-space: pre;
+      tab-size: 2;
+      caret-color: #38bdf8;
+    }
+
+    textarea.code-editor::selection {
+      background: rgba(56, 189, 248, 0.3);
+    }
+
+    pre.code-preview {
+      flex: 1;
+      margin: 0;
+      min-height: 410px;
+      font-family: 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.84rem;
+      padding: 1rem;
+      background: transparent;
+      color: var(--terminal-text-output);
+      line-height: 1.6;
+      overflow: auto;
+      white-space: pre;
+    }
+
+    pre.code-preview::selection {
+      background: rgba(52, 211, 153, 0.3);
+    }
+
+    /* Terminal Scrollbars */
+    .editor-container textarea::-webkit-scrollbar,
+    .editor-container pre::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    .editor-container textarea::-webkit-scrollbar-track,
+    .editor-container pre::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .editor-container textarea::-webkit-scrollbar-thumb,
+    .editor-container pre::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.16);
+      border-radius: 4px;
+    }
+
+    .editor-container textarea::-webkit-scrollbar-thumb:hover,
+    .editor-container pre::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    /* Explanation & Story Box */
+    .story-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .story-header {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .story-content {
+      color: #475569;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .story-content p {
+      margin-bottom: 0.75rem;
+    }
+
+    .story-content ul {
+      margin-left: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .story-content li {
+      margin-bottom: 0.4rem;
+    }
+
+    .story-content code {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.84rem;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Title Area (Milk White background, no nav) -->
+    <div class="title-area">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+        <div class="badge-pill" style="margin-bottom: 0;">
+          <span>🔮</span> node-json-transformer &bull; Example 03
+        </div>
+        <a href="examples.html" style="font-size: 0.84rem; font-weight: 600; color: var(--accent-blue); text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.75rem; border-radius: 6px; background: #ffffff; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+          <span>←</span> Back to Examples Catalog
+        </a>
+      </div>
+      <h1>Object to Object Transformation</h1>
+      <p class="subtitle">
+        Transform flat source properties into a deeply structured domain model. The code editors below are <strong>fully editable</strong> &mdash; type, paste, or format JSON and watch the output adapt instantaneously.
+      </p>
+    </div>
+
+    <!-- Quick Presets for Instant Interactive Testing -->
+    <div class="quick-edit-bar">
+      <span class="quick-edit-label"><span>💡</span> Quick Try:</span>
+      <button class="chip-btn" id="chipDefault">Default (Keshav, Yamuna Nagar)</button>
+      <button class="chip-btn" id="chipPreset2">Edit Name &amp; City (Anita, Bangalore)</button>
+      <button class="chip-btn" id="chipPreset3">Add Country &amp; Role</button>
+      <button class="chip-btn" id="chipPreset4">Custom Guide Structure</button>
+    </div>
+
+    <!-- Controls Bar -->
+    <div class="toolbar">
+      <div class="status-group">
+        <span class="pill-status" id="statusPill">✓ Live Reactive &bull; Ready</span>
+        <span class="status-hint">Click inside either editor to modify JSON. Press <kbd style="background:#e2e8f0; padding:2px 6px; border-radius:4px; font-size:0.75rem;">Tab</kbd> to indent.</span>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-secondary" id="btnReset">
+          <span>↺</span> Reset Default
+        </button>
+        <button class="btn btn-primary" id="btnRun">
+          <span>▶</span> Run Transform
+        </button>
+      </div>
+    </div>
+
+    <!-- 3-Column Code Grid -->
+    <div class="code-grid">
+
+      <!-- Column 1: Source JSON (Input) -->
+      <div class="code-card">
+        <div class="code-card-header">
+          <div style="display: flex; align-items: center;">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="code-title" style="color: #38bdf8;">
+              <span>📄</span> 1. Source JSON <span class="badge-editable" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">✏️ Editable</span>
+            </span>
+          </div>
+          <div class="card-actions">
+            <button class="btn-action" onclick="formatJSON('txtSource')">✨ Format</button>
+            <button class="btn-action" onclick="copySnippet('txtSource', this)">📋 Copy</button>
+          </div>
+        </div>
+        <div class="editor-container">
+          <div class="line-gutter" id="gutterSource"></div>
+          <textarea class="code-editor" id="txtSource" spellcheck="false" placeholder="Enter valid JSON source data here..."></textarea>
+        </div>
+      </div>
+
+      <!-- Column 2: Guide JSON (Blueprint) -->
+      <div class="code-card">
+        <div class="code-card-header">
+          <div style="display: flex; align-items: center;">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="code-title" style="color: #c084fc;">
+              <span>📜</span> 2. Guide JSON <span class="badge-editable" style="background: rgba(192, 132, 252, 0.15); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3);">✏️ Editable</span>
+            </span>
+          </div>
+          <div class="card-actions">
+            <button class="btn-action" onclick="formatJSON('txtGuide')">✨ Format</button>
+            <button class="btn-action" onclick="copySnippet('txtGuide', this)">📋 Copy</button>
+          </div>
+        </div>
+        <div class="editor-container">
+          <div class="line-gutter" id="gutterGuide"></div>
+          <textarea class="code-editor" id="txtGuide" spellcheck="false" placeholder="Enter transformation guide JSON recipe here..."></textarea>
+        </div>
+      </div>
+
+      <!-- Column 3: Transformed Output -->
+      <div class="code-card">
+        <div class="code-card-header">
+          <div style="display: flex; align-items: center;">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="code-title" style="color: #34d399;">
+              <span>✨</span> 3. Transformed Output <span class="badge-live" style="background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3);">⚡ Live Result</span>
+            </span>
+          </div>
+          <div class="card-actions">
+            <button class="btn-action" onclick="copySnippet('preOutput', this)">📋 Copy</button>
+          </div>
+        </div>
+        <div class="editor-container">
+          <div class="line-gutter" id="gutterOutput"></div>
+          <pre class="code-preview" id="preOutput"></pre>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Architectural Story & Analysis -->
+    <div class="story-card">
+      <div class="story-header">
+        <span>💡</span> Architectural Story &amp; Analysis
+      </div>
+      <div class="story-content">
+        <p>
+          In traditional procedural programming, reshaping a flat object into a nested object requires creating intermediate variables, null checks, and manual property assignments:
+        </p>
+        <ul>
+          <li><strong>Source Data:</strong> Has three flat fields at the root level: <code>firstName</code>, <code>city</code>, and <code>age</code>.</li>
+          <li><strong>Guide Blueprint:</strong> Declares an output property named <code>person</code> with its own nested <code>item</code> block containing <code>name</code> and <code>location</code>, while keeping <code>age</code> at the root level.</li>
+          <li><strong>Recursive Traversal:</strong> The engine traverses into <code>person.item</code>, evaluates <code>name = firstName</code> and <code>location = city</code>, and constructs the nested output object without altering the root source.</li>
+          <li><strong>Whitelisting Principle:</strong> Output keys belong 100% to the Guide. The source is only queried when a value needs to be retrieved.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Execution via jsDelivr CDN -->
+  <script type="module">
+    import { transform } from "https://cdn.jsdelivr.net/gh/keshavsoft/node-json-transformer@main/src/index.js";
+
+    // Presets
+    const presets = {
+      default: {
+        source: {
+          "firstName": "Keshav",
+          "city": "Yamuna Nagar",
+          "age": 40
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "person": {
+                "item": {
+                  "name": "firstName",
+                  "location": "city"
+                }
+              },
+              "age": "age"
+            }
+          }
+        }
+      },
+      preset2: {
+        source: {
+          "firstName": "Anita Sharma",
+          "city": "Bangalore",
+          "age": 32
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "person": {
+                "item": {
+                  "name": "firstName",
+                  "location": "city"
+                }
+              },
+              "age": "age"
+            }
+          }
+        }
+      },
+      preset3: {
+        source: {
+          "firstName": "Keshav",
+          "city": "Yamuna Nagar",
+          "country": "India",
+          "role": "Chief Architect",
+          "age": 40
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "userProfile": {
+                "item": {
+                  "fullName": "firstName",
+                  "designation": "role",
+                  "address": {
+                    "item": {
+                      "city": "city",
+                      "country": "country"
+                    }
+                  }
+                }
+              },
+              "activeYears": "age"
+            }
+          }
+        }
+      },
+      preset4: {
+        source: {
+          "firstName": "Keshav",
+          "city": "Yamuna Nagar",
+          "age": 40
+        },
+        guide: {
+          "mapping": {
+            "item": {
+              "candidate": {
+                "item": {
+                  "personal": {
+                    "item": {
+                      "displayName": "firstName",
+                      "currentAge": "age"
+                    }
+                  },
+                  "residence": "city"
+                }
+              }
+            }
+          }
+        }
+      }
+    };
+
+    const txtSource = document.getElementById("txtSource");
+    const txtGuide = document.getElementById("txtGuide");
+    const preOutput = document.getElementById("preOutput");
+    const statusPill = document.getElementById("statusPill");
+    const btnRun = document.getElementById("btnRun");
+    const btnReset = document.getElementById("btnReset");
+
+    const gutterSource = document.getElementById("gutterSource");
+    const gutterGuide = document.getElementById("gutterGuide");
+    const gutterOutput = document.getElementById("gutterOutput");
+
+    // Update Line Numbers Gutter
+    function updateGutter(text, gutterEl) {
+      const lineCount = (text || "").split("\n").length;
+      let numbers = "";
+      for (let i = 1; i <= Math.max(lineCount, 1); i++) {
+        numbers += i + "\n";
+      }
+      gutterEl.textContent = numbers;
+    }
+
+    function syncGutters() {
+      updateGutter(txtSource.value, gutterSource);
+      updateGutter(txtGuide.value, gutterGuide);
+      updateGutter(preOutput.textContent, gutterOutput);
+    }
+
+    // Synchronize gutter scrolling with textarea scrolling
+    function bindGutterScroll(textarea, gutter) {
+      textarea.addEventListener("scroll", () => {
+        gutter.scrollTop = textarea.scrollTop;
+      });
+    }
+    bindGutterScroll(txtSource, gutterSource);
+    bindGutterScroll(txtGuide, gutterGuide);
+
+    // Run Transformation Engine
+    function runTransform() {
+      const t0 = performance.now();
+      try {
+        const sourceData = JSON.parse(txtSource.value);
+        const guideData = JSON.parse(txtGuide.value);
+
+        const result = transform(sourceData, guideData);
+        const t1 = performance.now();
+        const duration = Math.max(1, Math.round(t1 - t0));
+
+        preOutput.textContent = JSON.stringify(result, null, 2);
+        preOutput.style.color = "#34d399";
+
+        statusPill.className = "pill-status";
+        statusPill.textContent = `✓ Executed in ${duration}ms &bull; Live`;
+
+        syncGutters();
+      } catch (err) {
+        preOutput.textContent = `// ⚠️ JSON / Execution Error:\n// ${err.message}\n\n// Keep typing or click "✨ Format" to check JSON validity.`;
+        preOutput.style.color = "#f87171";
+
+        statusPill.className = "pill-status error";
+        statusPill.textContent = "⚠️ Invalid JSON (Typing...)";
+
+        syncGutters();
+      }
+    }
+
+    // Real-time reactive execution on keystrokes
+    txtSource.addEventListener("input", () => {
+      updateGutter(txtSource.value, gutterSource);
+      runTransform();
+    });
+
+    txtGuide.addEventListener("input", () => {
+      updateGutter(txtGuide.value, gutterGuide);
+      runTransform();
+    });
+
+    // Smart Code Editor Keyboard Navigation (Tab indentation & Auto-indent on Enter)
+    function setupEditorKeys(textarea) {
+      textarea.addEventListener("keydown", function(e) {
+        // Tab / Shift+Tab indent
+        if (e.key === "Tab") {
+          e.preventDefault();
+          const start = this.selectionStart;
+          const end = this.selectionEnd;
+
+          if (e.shiftKey) {
+            // Dedent
+            const lineStart = this.value.lastIndexOf("\n", start - 1) + 1;
+            if (this.value.substring(lineStart, lineStart + 2) === "  ") {
+              this.value = this.value.substring(0, lineStart) + this.value.substring(lineStart + 2);
+              this.selectionStart = Math.max(lineStart, start - 2);
+              this.selectionEnd = Math.max(lineStart, end - 2);
+            }
+          } else {
+            // Indent 2 spaces
+            this.value = this.value.substring(0, start) + "  " + this.value.substring(end);
+            this.selectionStart = this.selectionEnd = start + 2;
+          }
+          runTransform();
+        }
+
+        // Auto-indent on Enter
+        if (e.key === "Enter") {
+          const start = this.selectionStart;
+          const lineStart = this.value.lastIndexOf("\n", start - 1) + 1;
+          const currentLine = this.value.substring(lineStart, start);
+          const indentMatch = currentLine.match(/^\s*/);
+          let indent = indentMatch ? indentMatch[0] : "";
+
+          // If line ends with opening brace or bracket, add 2 extra spaces
+          if (currentLine.trim().endsWith("{") || currentLine.trim().endsWith("[")) {
+            indent += "  ";
+          }
+
+          e.preventDefault();
+          this.value = this.value.substring(0, start) + "\n" + indent + this.value.substring(start);
+          this.selectionStart = this.selectionEnd = start + 1 + indent.length;
+          runTransform();
+        }
+      });
+    }
+
+    setupEditorKeys(txtSource);
+    setupEditorKeys(txtGuide);
+
+    // Format JSON helper
+    window.formatJSON = function(elementId) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      try {
+        el.value = JSON.stringify(JSON.parse(el.value), null, 2);
+        runTransform();
+      } catch (err) {
+        alert("Invalid JSON syntax: " + err.message);
+      }
+    };
+
+    // Copy to clipboard helper
+    window.copySnippet = function(elementId, btn) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const text = el.value !== undefined ? el.value : el.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "✓ Copied";
+        setTimeout(() => btn.innerHTML = originalText, 1800);
+      });
+    };
+
+    // Preset handlers
+    function applyPreset(presetKey) {
+      const p = presets[presetKey] || presets.default;
+      txtSource.value = JSON.stringify(p.source, null, 2);
+      txtGuide.value = JSON.stringify(p.guide, null, 2);
+      runTransform();
+    }
+
+    document.getElementById("chipDefault").addEventListener("click", () => applyPreset("default"));
+    document.getElementById("chipPreset2").addEventListener("click", () => applyPreset("preset2"));
+    document.getElementById("chipPreset3").addEventListener("click", () => applyPreset("preset3"));
+    document.getElementById("chipPreset4").addEventListener("click", () => applyPreset("preset4"));
+
+    btnReset.addEventListener("click", () => applyPreset("default"));
+    btnRun.addEventListener("click", runTransform);
+
+    // Initialize on page load
+    applyPreset("default");
+  </script>
+
+</body>
+</html>

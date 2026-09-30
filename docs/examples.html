@@ -445,6 +445,22 @@
       word-break: break-word;
     }
 
+    textarea.code-display {
+      background: var(--code-bg);
+      border: 1px solid transparent;
+      outline: none;
+      resize: vertical;
+      min-height: 360px;
+      width: 100%;
+      transition: all 0.2s ease;
+    }
+
+    textarea.code-display:focus {
+      background: #020617;
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+
     /* Story & Analysis Box */
     .analysis-card {
       background: rgba(56, 189, 248, 0.04);
@@ -606,33 +622,40 @@
           <div class="code-panel">
             <div class="code-panel-header">
               <span class="code-panel-title" style="color: #38bdf8;">
-                <span>📄</span> 1. Source JSON (Input)
+                <span>📄</span> 1. Source JSON <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500;">(Editable)</span>
               </span>
-              <button class="btn-mini-copy" onclick="copyCode('srcCode', this)">Copy</button>
+              <div style="display: flex; gap: 0.35rem;">
+                <button class="btn-mini-copy" onclick="formatCode('srcCode')">✨ Format</button>
+                <button class="btn-mini-copy" onclick="copyCode('srcCode', this)">Copy</button>
+              </div>
             </div>
-            <pre class="code-display" id="srcCode"></pre>
+            <textarea class="code-display" id="srcCode" spellcheck="false"></textarea>
           </div>
 
           <!-- Column 2: Guide JSON -->
           <div class="code-panel">
             <div class="code-panel-header">
               <span class="code-panel-title" style="color: #c084fc;">
-                <span>📜</span> 2. Guide JSON (Recipe)
+                <span>📜</span> 2. Guide JSON <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500;">(Editable)</span>
               </span>
-              <button class="btn-mini-copy" onclick="copyCode('guideCode', this)">Copy</button>
+              <div style="display: flex; gap: 0.35rem;">
+                <button class="btn-mini-copy" onclick="formatCode('guideCode')">✨ Format</button>
+                <button class="btn-mini-copy" onclick="copyCode('guideCode', this)">Copy</button>
+              </div>
             </div>
-            <pre class="code-display" id="guideCode"></pre>
+            <textarea class="code-display" id="guideCode" spellcheck="false"></textarea>
           </div>
 
           <!-- Column 3: Result Output -->
           <div class="code-panel">
             <div class="code-panel-header">
               <span class="code-panel-title" style="color: #34d399;">
-                <span>✨</span> 3. Transformed Output
+                <span>✨</span> 3. Transformed Output <span style="font-size: 0.7rem; color: #34d399; font-weight: 500;">(Live)</span>
               </span>
               <button class="btn-mini-copy" onclick="copyCode('outCode', this)">Copy</button>
             </div>
             <pre class="code-display" id="outCode"></pre>
+          </div>
           </div>
         </div>
 
@@ -1282,11 +1305,17 @@
       examples.forEach((ex, idx) => {
         const btn = document.createElement("button");
         btn.className = `example-btn ${idx === currentIndex ? 'active' : ''}`;
+        const isObjectToObject = ex.id === "ex03" || ex.title.toLowerCase().includes("object to object");
+
         btn.innerHTML = `
           <span>${ex.title.split(':')[0]}</span>
-          <span class="btn-num">${ex.num}</span>
+          <span class="btn-num">${ex.num}${isObjectToObject ? ' ↗' : ''}</span>
         `;
         btn.addEventListener("click", () => {
+          if (isObjectToObject) {
+            window.location.href = "object-to-object.html";
+            return;
+          }
           currentIndex = idx;
           loadExample(currentIndex);
         });
@@ -1299,10 +1328,15 @@
       const ex = examples[index];
       if (!ex) return;
 
+      if (ex.id === "ex03" || ex.title.toLowerCase().includes("object to object")) {
+        window.location.href = "object-to-object.html";
+        return;
+      }
+
       exTitleEl.textContent = `${ex.num}. ${ex.title}`;
       exCategoryEl.textContent = ex.category;
-      srcCodeEl.textContent = JSON.stringify(ex.source, null, 2);
-      guideCodeEl.textContent = JSON.stringify(ex.guide, null, 2);
+      srcCodeEl.value = JSON.stringify(ex.source, null, 2);
+      guideCodeEl.value = JSON.stringify(ex.guide, null, 2);
       analysisContentEl.innerHTML = ex.story;
       pageCounterEl.textContent = `${index + 1} of ${examples.length}`;
 
@@ -1314,14 +1348,16 @@
         btn.classList.toggle("active", idx === index);
       });
 
-      // Execute live transform
-      executeLiveTransform(ex.source, ex.guide);
+      // Execute live transform from current inputs
+      runFromInputs();
     }
 
-    // Live Execution
-    function executeLiveTransform(source, guide) {
+    // Live Execution from editable textareas
+    function runFromInputs() {
       try {
-        const result = transform(source, guide);
+        const sourceData = JSON.parse(srcCodeEl.value);
+        const guideData = JSON.parse(guideCodeEl.value);
+        const result = transform(sourceData, guideData);
         outCodeEl.textContent = JSON.stringify(result, null, 2);
         outCodeEl.style.color = "#34d399";
       } catch (err) {
@@ -1330,9 +1366,34 @@
       }
     }
 
+    // Live reactivity when user edits code
+    srcCodeEl.addEventListener("input", runFromInputs);
+    guideCodeEl.addEventListener("input", runFromInputs);
+
+    // Tab key indentation support for editors
+    function enableTabIndent(textarea) {
+      textarea.addEventListener("keydown", function(e) {
+        if (e.key === "Tab") {
+          e.preventDefault();
+          const start = this.selectionStart;
+          const end = this.selectionEnd;
+          this.value = this.value.substring(0, start) + "  " + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = start + 2;
+          runFromInputs();
+        }
+      });
+    }
+    enableTabIndent(srcCodeEl);
+    enableTabIndent(guideCodeEl);
+
     // Navigation buttons
     btnPrev.addEventListener("click", () => {
       if (currentIndex > 0) {
+        const targetIdx = currentIndex - 1;
+        if (examples[targetIdx]?.id === "ex03" || examples[targetIdx]?.title.toLowerCase().includes("object to object")) {
+          window.location.href = "object-to-object.html";
+          return;
+        }
         currentIndex--;
         loadExample(currentIndex);
       }
@@ -1340,30 +1401,54 @@
 
     btnNext.addEventListener("click", () => {
       if (currentIndex < examples.length - 1) {
+        const targetIdx = currentIndex + 1;
+        if (examples[targetIdx]?.id === "ex03" || examples[targetIdx]?.title.toLowerCase().includes("object to object")) {
+          window.location.href = "object-to-object.html";
+          return;
+        }
         currentIndex++;
         loadExample(currentIndex);
       }
     });
 
     btnRunExample.addEventListener("click", () => {
-      const ex = examples[currentIndex];
-      executeLiveTransform(ex.source, ex.guide);
+      runFromInputs();
     });
 
     // Send active example to Workbench
     btnSendToWorkbench.addEventListener("click", () => {
-      const ex = examples[currentIndex];
-      localStorage.setItem("transformer_workbench_custom", JSON.stringify({
-        source: ex.source,
-        guide: ex.guide
-      }));
+      try {
+        localStorage.setItem("transformer_workbench_custom", JSON.stringify({
+          source: JSON.parse(srcCodeEl.value),
+          guide: JSON.parse(guideCodeEl.value)
+        }));
+      } catch (e) {
+        const ex = examples[currentIndex];
+        localStorage.setItem("transformer_workbench_custom", JSON.stringify({
+          source: ex.source,
+          guide: ex.guide
+        }));
+      }
     });
+
+    // Format code button helper
+    window.formatCode = function(elementId) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      try {
+        el.value = JSON.stringify(JSON.parse(el.value), null, 2);
+        runFromInputs();
+      } catch (err) {
+        alert("Invalid JSON: " + err.message);
+      }
+    };
 
     // Copy to clipboard helper
     window.copyCode = function(elementId, btn) {
       const el = document.getElementById(elementId);
       if (!el) return;
-      navigator.clipboard.writeText(el.textContent).then(() => {
+      const text = el.value !== undefined ? el.value : el.textContent;
+      navigator.clipboard.writeText(text).then(() => {
         const originalText = btn.textContent;
         btn.textContent = "✓ Copied";
         setTimeout(() => btn.textContent = originalText, 1800);
