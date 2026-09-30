@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node Transformer — Interactive Browser Workbench</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- CDN Scripts for Browser Bundles -->
+  <script src="https://cdn.jsdelivr.net/gh/keshavsoft/select-json-by-json@main/docs/dist/min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/keshavsoft/json-to-tag-table@main/docs/dist/v6/min.js"></script>
+
+  <style>
+    :root {
+      --bg: #070a12;
+      --card-bg: rgba(16, 24, 40, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --accent-green: #34d399;
+      --accent-purple: #818cf8;
+      --accent-amber: #fbbf24;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --code-bg: #030712;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 1.25rem 1.25rem;
+      background-image:
+        radial-gradient(ellipse 90% 50% at 50% -10%, rgba(56, 189, 248, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(129, 140, 248, 0.07), transparent),
+        radial-gradient(ellipse 60% 40% at 0% 80%, rgba(52, 211, 153, 0.07), transparent);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 840px;
+      margin: 0 auto 0.6rem auto;
+      line-height: 1.5;
+    }
+
+    /* Pipeline Architecture Ribbon */
+    .pipeline-ribbon {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      overflow-x: auto;
+      padding: 6px 4px 8px 4px;
+    }
+
+    .pipe-step {
+      flex: 1;
+      min-width: 200px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 0.65rem 0.9rem;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .pipe-step:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .pipe-step.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+      background: rgba(22, 35, 60, 0.9);
+      transform: translateY(-2px);
+    }
+
+    .pipe-step-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+
+    .pipe-step-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .pipe-step-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Preset Toolbar */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .preset-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .preset-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .preset-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text);
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .preset-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .preset-btn.active {
+      background: var(--accent);
+      color: #04101e;
+      border-color: var(--accent);
+    }
+
+    /* Main Grid */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      backdrop-filter: blur(16px);
+      margin-bottom: 1.25rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .editor-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .tag-badge {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-family: 'Fira Code', monospace;
+    }
+
+    textarea,
+    pre {
+      width: 100%;
+      height: 320px;
+      background: var(--code-bg);
+      color: #38bdf8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 0.85rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      overflow: auto;
+      white-space: pre;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    textarea {
+      color: #f1f5f9;
+      resize: vertical;
+    }
+
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border: 1px solid var(--border-subtle);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+    }
+
+    /* Table Container Styling */
+    #tableContainer {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      background: var(--code-bg);
+      padding: 1rem;
+    }
+
+    #tableContainer table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+    }
+
+    #tableContainer th {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--accent);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+
+    #tableContainer td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    #tableContainer tr:hover td {
+      background: rgba(56, 189, 248, 0.05);
+    }
+
+    #tableContainer button {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    #tableContainer button:hover {
+      background: var(--accent);
+      color: #04101e;
+    }
+
+    .stats-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>Node Transformer</h1>
+      <p class="subtitle">
+        Fast, declarative JSON transformation from raw source to clean contract.
+      </p>
+    </header>
+
+    <!-- Preset & Run All Toolbar -->
+    <div class="toolbar">
+      <div class="preset-group">
+        <span class="preset-label">Data Preset:</span>
+        <button class="preset-btn" id="btnPresetDemo">⭐ Keshav Demo</button>
+        <button class="preset-btn active" id="btnPresetInvoice">Invoices &amp; Inventory</button>
+        <button class="preset-btn" id="btnPresetOrders">E-Commerce Orders</button>
+        <button class="preset-btn" id="btnPresetLogistics">Supply Chain Shipments</button>
+      </div>
+      <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+        <a href="index.html" class="btn-action" style="text-decoration: none; font-weight: 600; padding: 0.45rem 0.9rem; border-radius: 8px;">
+          📖 How It Works
+        </a>
+        <a href="cdn.html" class="btn-action" style="text-decoration: none; font-weight: 600; padding: 0.45rem 0.9rem; border-radius: 8px;">
+          📦 CDN Guide
+        </a>
+      </div>
+    </div>
+
+    <!-- Stepper Navigation Ribbon: 3-Step Pipeline -->
+    <div class="pipeline-ribbon">
+      <div class="pipe-step active" data-step="step1">
+        <div class="pipe-step-tag">Step 1: Input</div>
+        <div class="pipe-step-title">Raw Enterprise Data</div>
+        <div class="pipe-step-desc">XML or nested JSON source</div>
+      </div>
+      <div class="pipe-step" data-step="step2">
+        <div class="pipe-step-tag" style="color: #c084fc;">Step 2: Transform</div>
+        <div class="pipe-step-title">node-json-transformer</div>
+        <div class="pipe-step-desc">Transform Data to Schema Contract</div>
+      </div>
+      <div class="pipe-step" data-step="step3">
+        <div class="pipe-step-tag" style="color: var(--accent-amber);">Step 3: Visual UI</div>
+        <div class="pipe-step-title">json-to-tag-table</div>
+        <div class="pipe-step-desc">Interactive Drilldown Table</div>
+      </div>
+    </div>
+
+    <!-- STEP 1: Raw Input -->
+    <div class="step-card-pane" id="pane-step1">
+      <div class="card">
+        <div class="editor-label">
+          <span>1. Raw Enterprise Source JSON</span>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn-action" id="btnFormatInput">✨ Format JSON</button>
+            <button class="btn-action" id="btnCopyInput">📋 Copy</button>
+          </div>
+        </div>
+        <textarea id="txtRawInput" spellcheck="false"></textarea>
+      </div>
+    </div>
+
+    <!-- STEP 2: node-json-transformer (Transform) -->
+    <div class="step-card-pane" id="pane-step2" style="display: none;">
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <div class="editor-label">
+              <span>Transformation Recipe (node-json-transformer)</span>
+              <a href="https://github.com/keshavsoft/node-json-transformer" target="_blank" class="tag-badge"
+                style="background: rgba(129, 140, 248, 0.15); color: #c084fc; text-decoration: none; font-weight: 700;">
+                🔮 node-json-transformer Repo
+              </a>
+            </div>
+            <textarea id="txtTransformRecipe" spellcheck="false"></textarea>
+            <div
+              style="margin-top: 0.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+              <span style="font-size: 0.78rem; color: var(--text-muted);">
+                🔮 Transform source JSON to output contract recipe
+              </span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn-action" id="btnFormatRecipe">✨ Format</button>
+                <button class="btn-action" id="btnRunTransform"
+                  style="background: linear-gradient(135deg, #818cf8, #38bdf8); color: #04101e; font-weight: 700;">
+                  🔮 Run Transform
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="editor-label">
+              <span>Transformed Output (Contract Result)</span>
+              <button class="btn-action" id="btnCopyTransform">📋 Copy</button>
+            </div>
+            <pre id="preTransformOut" style="color: #a5b4fc;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Interactive Table Rendering (json-to-tag-table) -->
+    <div class="step-card-pane" id="pane-step3" style="display: none;">
+      <div class="card">
+        <div class="editor-label">
+          <span>Live Interactive Drilldown Table (json-to-tag-table)</span>
+          <button class="btn-action" id="btnRenderTable">🔄 Re-Render Table</button>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+          Rendered directly from the transformed output of <code>node-json-transformer</code>. Click expand buttons to
+          inspect child collections.
+        </p>
+        <div id="tableContainer"></div>
+      </div>
+    </div>
+
+    <!-- Pipeline Stats Footer -->
+    <div class="stats-footer">
+      <span>Pipeline Status: <strong id="statStatus" style="color: var(--accent-green);">Ready</strong></span>
+      <span>Total Execution Latency: <strong id="statTotalLatency">0.00 ms</strong></span>
+    </div>
+  </div>
+
+  <!-- CDN Loader & Logic -->
+  <script type="module">
+    // Presets configured for node-json-transformer
+    const presets = {
+      demo: {
+        raw: {
+          "name": "Keshav",
+          "city": "Yamuna Nagar",
+          "dob": "1234"
+        },
+        recipe: {
+          "mapping": {
+            "item": {
+              "customerName": "name",
+              "customerCity": "city"
+            }
+          }
+        }
+      },
+      invoice: {
+        raw: [
+          {
+            "INVOICE_NUMBER": 1001,
+            "TRANSACTION_DATE": "2026-09-24",
+            "CUSTOMER_NAME": "Alpha Global Industries",
+            "INTERNAL_AUDIT_LOG": "Approved by compliance team",
+            "STATUS_FLAG": "ACTIVE",
+            "ALL_INVENTORY_ENTRIES_LIST": [
+              {
+                "STOCK_ITEM_NAME": "Industrial Power Cable",
+                "BILLED_QTY": "50 mtr",
+                "UNIT_RATE": 120.00,
+                "TOTAL_AMOUNT": 6000.00,
+                "INTERNAL_PART_CODE": "CAB-440V",
+                "BATCH_ALLOCATIONS_LIST": [
+                  { "BATCH_ID": "LOT-901", "ALLOCATED_QTY": "50 mtr", "AMOUNT": 6000.00 }
+                ]
+              },
+              {
+                "STOCK_ITEM_NAME": "Reinforced Mesh Roll",
+                "BILLED_QTY": "20 Nos",
+                "UNIT_RATE": 45.50,
+                "TOTAL_AMOUNT": 910.00,
+                "INTERNAL_PART_CODE": "MSH-2026",
+                "BATCH_ALLOCATIONS_LIST": [
+                  { "BATCH_ID": "LOT-330", "ALLOCATED_QTY": "20 Nos", "AMOUNT": 910.00 }
+                ]
+              }
+            ]
+          }
+        ],
+        recipe: {
+          "mapping": {
+            "item": {
+              "invoiceNo": "INVOICE_NUMBER",
+              "date": "TRANSACTION_DATE",
+              "customer": "CUSTOMER_NAME"
+            }
+          },
+          "items": [
+            {
+              "list": "ALL_INVENTORY_ENTRIES_LIST",
+              "item": {
+                "itemName": "STOCK_ITEM_NAME",
+                "qty": "BILLED_QTY",
+                "amount": "TOTAL_AMOUNT",
+                "batches": [
+                  {
+                    "list": "BATCH_ALLOCATIONS_LIST",
+                    "item": {
+                      "batchId": "BATCH_ID",
+                      "allocatedQty": "ALLOCATED_QTY"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      orders: {
+        raw: [
+          {
+            "ORDER_IDENTIFIER": "ORD-5542",
+            "PURCHASE_TIMESTAMP": "2026-09-24T10:15:00Z",
+            "ACCOUNT_BUYER": "Sophia Martinez",
+            "PAYMENT_METHOD": "CREDIT_CARD_TOKEN",
+            "ORDER_LINES_COLLECTION": [
+              {
+                "PRODUCT_SKU": "SKU-HEADPHONES-01",
+                "ORDERED_UNITS": 1,
+                "LINE_PRICE": 249.99,
+                "INTERNAL_MARGIN": 0.42
+              },
+              {
+                "PRODUCT_SKU": "SKU-CASE-PRO",
+                "ORDERED_UNITS": 2,
+                "LINE_PRICE": 29.99,
+                "INTERNAL_MARGIN": 0.65
+              }
+            ]
+          }
+        ],
+        recipe: {
+          "mapping": {
+            "item": {
+              "orderId": "ORDER_IDENTIFIER",
+              "timestamp": "PURCHASE_TIMESTAMP",
+              "buyer": "ACCOUNT_BUYER"
+            }
+          },
+          "items": [
+            {
+              "list": "ORDER_LINES_COLLECTION",
+              "item": {
+                "sku": "PRODUCT_SKU",
+                "units": "ORDERED_UNITS",
+                "price": "LINE_PRICE"
+              }
+            }
+          ]
+        }
+      },
+      logistics: {
+        raw: [
+          {
+            "WAYBILL_NUMBER": "WB-88741",
+            "DISPATCH_DATE": "2026-09-24",
+            "DESTINATION_HUB": "Berlin Regional Port",
+            "CARRIER_CODE": "CARRIER-DE-99",
+            "CARGO_MANIFEST_ITEMS": [
+              {
+                "CONTAINER_CODE": "CN-4012",
+                "WEIGHT_KG": 4200,
+                "SEAL_IDENTIFIERS": [
+                  { "SEAL_TAG": "S-102" },
+                  { "SEAL_TAG": "S-103" }
+                ]
+              }
+            ]
+          }
+        ],
+        recipe: {
+          "mapping": {
+            "item": {
+              "trackingId": "WAYBILL_NUMBER",
+              "date": "DISPATCH_DATE",
+              "destination": "DESTINATION_HUB"
+            }
+          },
+          "items": [
+            {
+              "list": "CARGO_MANIFEST_ITEMS",
+              "item": {
+                "container": "CONTAINER_CODE",
+                "weight": "WEIGHT_KG"
+              }
+            }
+          ]
+        }
+      }
+    };
+
+    // Reference implementation of node-json-transformer
+    function transform(source, transformation) {
+      if (source == null || transformation == null) return null;
+      if (Array.isArray(source)) {
+        return source.map(item => transform(item, transformation));
+      }
+
+      let itemSpec = null;
+      if (transformation.mapping && typeof transformation.mapping.item === 'object') {
+        itemSpec = transformation.mapping.item;
+      } else if (transformation.item && typeof transformation.item === 'object') {
+        itemSpec = transformation.item;
+      }
+
+      const result = {};
+
+      if (itemSpec) {
+        for (const [outKey, srcKey] of Object.entries(itemSpec)) {
+          if (typeof srcKey === 'string') {
+            result[outKey] = getProperty(source, srcKey);
+          } else if (Array.isArray(srcKey)) {
+            result[outKey] = transformListRule(source, srcKey);
+          } else if (srcKey && typeof srcKey === 'object') {
+            result[outKey] = transform(source, srcKey);
+          }
+        }
+      }
+
+      for (const [outKey, rule] of Object.entries(transformation)) {
+        if (outKey === 'mapping' || outKey === 'item') continue;
+        if (Array.isArray(rule)) {
+          result[outKey] = transformListRule(source, rule);
+        } else if (rule && typeof rule === 'object' && rule.list && rule.item) {
+          result[outKey] = transformListRule(source, [rule]);
+        }
+      }
+
+      return result;
+    }
+
+    function transformListRule(source, ruleArray) {
+      if (!ruleArray || ruleArray.length === 0) return [];
+      const rule = ruleArray[0];
+      const rawList = getProperty(source, rule.list);
+      if (!rawList) return [];
+      const listItems = Array.isArray(rawList) ? rawList : [rawList];
+      return listItems.map(item => transform(item, { item: rule.item, ...rule }));
+    }
+
+    function getProperty(obj, key) {
+      if (!obj || typeof obj !== 'object') return undefined;
+      if (key in obj) return obj[key];
+      if (key.includes('.')) {
+        const parts = key.split('.');
+        let curr = obj;
+        for (const part of parts) {
+          if (curr == null) return undefined;
+          curr = curr[part];
+        }
+        return curr;
+      }
+      return undefined;
+    }
+
+    // DOM Elements
+    const txtRawInput = document.getElementById("txtRawInput");
+    const txtTransformRecipe = document.getElementById("txtTransformRecipe");
+    const preTransformOut = document.getElementById("preTransformOut");
+    const tableContainer = document.getElementById("tableContainer");
+    const statTotalLatency = document.getElementById("statTotalLatency");
+    const statStatus = document.getElementById("statStatus");
+
+    // Stepper Tab Switching (3 Steps)
+    document.querySelectorAll(".pipe-step").forEach(step => {
+      step.addEventListener("click", () => {
+        document.querySelectorAll(".pipe-step").forEach(s => s.classList.remove("active"));
+        document.querySelectorAll(".step-card-pane").forEach(p => p.style.display = "none");
+        step.classList.add("active");
+        const targetPane = document.getElementById(`pane-${step.dataset.step}`);
+        if (targetPane) targetPane.style.display = "block";
+      });
+    });
+
+    // Load Preset Function
+    function loadPreset(presetKey) {
+      const p = presets[presetKey];
+      if (!p) return;
+      txtRawInput.value = JSON.stringify(p.raw, null, 2);
+      txtTransformRecipe.value = JSON.stringify(p.recipe, null, 2);
+      runPipeline();
+    }
+
+    // Preset button event listeners
+    document.getElementById("btnPresetDemo").addEventListener("click", (e) => {
+      setActivePreset(e.target);
+      loadPreset("demo");
+    });
+    document.getElementById("btnPresetInvoice").addEventListener("click", (e) => {
+      setActivePreset(e.target);
+      loadPreset("invoice");
+    });
+    document.getElementById("btnPresetOrders").addEventListener("click", (e) => {
+      setActivePreset(e.target);
+      loadPreset("orders");
+    });
+    document.getElementById("btnPresetLogistics").addEventListener("click", (e) => {
+      setActivePreset(e.target);
+      loadPreset("logistics");
+    });
+
+    function setActivePreset(target) {
+      document.querySelectorAll(".preset-btn").forEach(b => b.classList.remove("active"));
+      target.classList.add("active");
+    }
+
+    // Run node-json-transformer
+    function runStepTransform() {
+      try {
+        const raw = JSON.parse(txtRawInput.value);
+        const recipe = JSON.parse(txtTransformRecipe.value);
+        const res = transform(raw, recipe);
+        preTransformOut.textContent = JSON.stringify(res, null, 2);
+        return res;
+      } catch (err) {
+        preTransformOut.textContent = `❌ ${err.message}`;
+        return null;
+      }
+    }
+    document.getElementById("btnRunTransform").addEventListener("click", runStepTransform);
+
+    // Render Table via json-to-tag-table CDN
+    function renderTableUI(data) {
+      tableContainer.innerHTML = "";
+      if (!data) return;
+
+      try {
+        if (typeof globalThis.ks?.jsonToTagTable === "function") {
+          globalThis.ks.jsonToTagTable({
+            inData: data,
+            inTargetElement: tableContainer
+          });
+        } else if (typeof globalThis.ks?.jsonToTagTable?.Table === "function") {
+          const table = new globalThis.ks.jsonToTagTable.Table({
+            theme: "default",
+            data: Array.isArray(data) ? data : [data]
+          });
+          table.methods.render({
+            targetHtmlId: "tableContainer",
+            inSkeletonType: "tableSimple"
+          });
+        } else {
+          renderFallbackTable(data, tableContainer);
+        }
+      } catch (err) {
+        renderFallbackTable(data, tableContainer);
+      }
+    }
+
+    function renderFallbackTable(data, container) {
+      const arr = Array.isArray(data) ? data : [data];
+      if (arr.length === 0) {
+        container.innerHTML = "<p style='color: var(--text-muted);'>No records to display.</p>";
+        return;
+      }
+
+      const keys = Object.keys(arr[0]);
+      let html = "<table><thead><tr>";
+      keys.forEach(k => html += `<th>${k}</th>`);
+      html += "</tr></thead><tbody>";
+
+      arr.forEach(row => {
+        html += "<tr>";
+        keys.forEach(k => {
+          const val = row[k];
+          if (Array.isArray(val)) {
+            html += `<td><button onclick='alert(JSON.stringify(${JSON.stringify(val)}, null, 2))'>Expand (${val.length} items)</button></td>`;
+          } else if (typeof val === "object" && val !== null) {
+            html += `<td><button onclick='alert(JSON.stringify(${JSON.stringify(val)}, null, 2))'>View Details</button></td>`;
+          } else {
+            html += `<td>${val ?? ""}</td>`;
+          }
+        });
+        html += "</tr>";
+      });
+
+      html += "</tbody></table>";
+      container.innerHTML = html;
+    }
+
+    document.getElementById("btnRenderTable").addEventListener("click", () => {
+      const current = runStepTransform();
+      renderTableUI(current);
+    });
+
+    // Run Full Pipeline
+    function runPipeline() {
+      const t0 = performance.now();
+      statStatus.textContent = "Processing...";
+
+      const transformed = runStepTransform();
+      renderTableUI(transformed);
+
+      const t1 = performance.now();
+      statTotalLatency.textContent = `${(t1 - t0).toFixed(2)} ms`;
+      statStatus.textContent = "Pipeline Execution Complete";
+    }
+
+    document.getElementById("btnRunAll")?.addEventListener("click", runPipeline);
+
+    // Copy & Format helpers
+    document.getElementById("btnFormatInput").addEventListener("click", () => {
+      try {
+        txtRawInput.value = JSON.stringify(JSON.parse(txtRawInput.value), null, 2);
+      } catch (err) { alert("Invalid JSON: " + err.message); }
+    });
+
+    document.getElementById("btnFormatRecipe").addEventListener("click", () => {
+      try {
+        txtTransformRecipe.value = JSON.stringify(JSON.parse(txtTransformRecipe.value), null, 2);
+      } catch (err) { alert("Invalid JSON: " + err.message); }
+    });
+
+    document.getElementById("btnCopyInput").addEventListener("click", () => copyToClipboard(txtRawInput.value));
+    document.getElementById("btnCopyTransform").addEventListener("click", () => copyToClipboard(preTransformOut.textContent));
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => alert("Copied to clipboard!"));
+    }
+
+    // Initial load
+    loadPreset("invoice");
+  </script>
+</body>
+
+</html>

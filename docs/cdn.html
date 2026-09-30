@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>node-json-transformer — CDN & Usage Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #070a12;
+      --card-bg: rgba(16, 24, 40, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --accent-green: #34d399;
+      --accent-purple: #c084fc;
+      --accent-amber: #fbbf24;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --code-bg: #030712;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 1.25rem;
+      background-image:
+        radial-gradient(ellipse 90% 50% at 50% -10%, rgba(56, 189, 248, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(129, 140, 248, 0.07), transparent),
+        radial-gradient(ellipse 60% 40% at 0% 80%, rgba(52, 211, 153, 0.07), transparent);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Top Nav */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(12px);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      background: rgba(192, 132, 252, 0.15);
+      border: 1px solid rgba(192, 132, 252, 0.3);
+      color: var(--accent-purple);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--accent);
+    }
+
+    .btn-workbench {
+      background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
+      color: #04101e;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: 0 0 16px var(--accent-glow);
+      transition: all 0.2s ease;
+    }
+
+    .btn-workbench:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Hero */
+    header.hero {
+      text-align: center;
+      margin-bottom: 2.25rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Highlight Card (From Image) */
+    .hero-featured-card {
+      background: rgba(16, 24, 40, 0.95);
+      border: 2px solid rgba(56, 189, 248, 0.4);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
+      position: relative;
+    }
+
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .card-title-text {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .card-badge-unified {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      background: rgba(192, 132, 252, 0.15);
+      color: var(--accent-purple);
+      border: 1px solid rgba(192, 132, 252, 0.35);
+    }
+
+    .card-mental-model {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+    }
+
+    .card-mental-model strong {
+      color: #ffffff;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.75rem;
+      backdrop-filter: blur(16px);
+      transition: border-color 0.2s ease;
+    }
+
+    .section-card:hover {
+      border-color: rgba(56, 189, 248, 0.25);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-icon {
+      font-size: 1.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Code Container with Copy Button */
+    .code-container {
+      position: relative;
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      margin-top: 0.75rem;
+      overflow: hidden;
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .code-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-copy {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-copy:hover {
+      background: rgba(56, 189, 248, 0.18);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-copy.copied {
+      background: rgba(52, 211, 153, 0.2);
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    pre.code-block {
+      padding: 1.1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    /* Live Interactive Sandbox */
+    .sandbox-box {
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .sandbox-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn-run-live {
+      background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+      color: #04101e;
+      border: none;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-run-live:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 16px rgba(192, 132, 252, 0.4);
+    }
+
+    .output-preview {
+      background: #02040a;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: #38bdf8;
+      max-height: 260px;
+      overflow: auto;
+    }
+
+    /* Tips & Alerts */
+    .tip-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.88rem;
+      color: #bae6fd;
+      margin-top: 1rem;
+    }
+
+    .cta-banner {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.12) 0%, rgba(56, 189, 248, 0.12) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2.25rem 1.5rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .cta-banner h2 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-banner p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 600px;
+      margin: 0 auto 1.25rem auto;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <a href="index.html" class="nav-brand">
+        <span>🔮</span> node-json-transformer
+        <span class="nav-badge">Unified Engine</span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="nav-link">
+          <span>📖</span> How It Works
+        </a>
+        <a href="workbench.html" class="btn-workbench">
+          <span>🚀</span> Test Code in Workbench
+        </a>
+        <a href="https://github.com/keshavsoft/node-json-transformer" target="_blank" class="nav-link">
+          <span>📂</span> GitHub Repo
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+      <h1>How to Use node-json-transformer via CDN</h1>
+      <p class="hero-subtitle">
+        Unified declarative transformation engine. Combines field selection, property renaming, and contract schema mapping in a single pass. Designed especially for JSON derived from XML/Tally structures with dot-notated keys.
+      </p>
+    </header>
+
+    <!-- Featured Card from Ecosystem -->
+    <div class="hero-featured-card">
+      <div class="card-top-row">
+        <div class="card-title-group">
+          <span style="font-size: 1.4rem;">🔮</span>
+          <span class="card-title-text">node-json-transformer</span>
+        </div>
+        <span class="card-badge-unified">Unified Engine</span>
+      </div>
+
+      <div class="card-mental-model">
+        <strong>Mental Model:</strong> Source JSON contains data, Transformation JSON describes output. Selected, renamed, and reshaped simultaneously.
+      </div>
+
+      <!-- Featured Code Snippet with Copy Option -->
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-title">node-json-transformer &mdash; Primary Usage Pattern</span>
+          <button class="btn-copy" onclick="copySnippet('codeCardSnippet', this)">📋 Copy Code</button>
+        </div>
+        <pre class="code-block" id="codeCardSnippet">const { transform } = require("node-json-transformer");
+
+const result = transform(data, {
+  item: {
+    customer_name: "CUSTOMER_NAME",
+    transaction_date: "TRANSACTION_DATE"
+  }
+});</pre>
+      </div>
+    </div>
+
+    <!-- Section 1: Browser CDN Usage -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">🌐</div>
+        <div>
+          <div class="section-title">1. Browser CDN Script Tag (No Node.js Required)</div>
+          <div class="section-desc">Load <code>node-json-transformer</code> directly in any client-side browser HTML file via jsDelivr CDN.</div>
+        </div>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 0.5rem;">
+        Import <code>node-json-transformer</code> as an ES module directly from the official repository CDN:
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-title">HTML &mdash; ES Module CDN Import</span>
+          <button class="btn-copy" onclick="copySnippet('codeBrowserCdn', this)">📋 Copy Code</button>
+        </div>
+        <pre class="code-block" id="codeBrowserCdn">&lt;!-- Import node-json-transformer via jsDelivr CDN --&gt;
+&lt;script type="module"&gt;
+  import { transform } from "https://cdn.jsdelivr.net/gh/keshavsoft/node-json-transformer@main/src/index.js";
+
+  // 1. Raw source data (e.g. from API or Tally/XML export)
+  const data = {
+    CUSTOMER_NAME: "Keshav",
+    TRANSACTION_DATE: "2026-09-30"
+  };
+
+  // 2. Declarative contract specification
+  const result = transform(data, {
+    item: {
+      customer_name: "CUSTOMER_NAME",
+      transaction_date: "TRANSACTION_DATE"
+    }
+  });
+
+  console.log("Transformed Contract:", result);
+  // Output: { customer_name: "Keshav", transaction_date: "2026-09-30" }
+&lt;/script&gt;</pre>
+      </div>
+
+      <div class="tip-box">
+        <span>💡</span>
+        <div>
+          <strong>Zero Build Tools:</strong> This runs directly in Google Chrome, Microsoft Edge, Firefox, and Safari without npm, Webpack, Vite, or any build step.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Complete Ready-to-Run Single HTML File -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">📄</div>
+        <div>
+          <div class="section-title">2. Complete Runnable HTML Example with Live UI</div>
+          <div class="section-desc">Save this file as <code>demo.html</code> and double-click to run in your browser.</div>
+        </div>
+      </div>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-title">demo.html &mdash; Full Standalone Web Page</span>
+          <button class="btn-copy" onclick="copySnippet('codeFullPage', this)">📋 Copy Full HTML</button>
+        </div>
+        <pre class="code-block" id="codeFullPage">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;node-json-transformer CDN Demo&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="background: #070a12; color: #f8fafc; font-family: sans-serif; padding: 2rem;"&gt;
+
+  &lt;h1 style="color: #38bdf8;"&gt;node-json-transformer Demo&lt;/h1&gt;
+  &lt;p style="color: #94a3b8;"&gt;Transformed output from CDN:&lt;/p&gt;
+
+  &lt;pre id="outputView" style="background: #030712; color: #34d399; padding: 1.25rem; border-radius: 8px; border: 1px solid #334155; font-family: monospace;"&gt;&lt;/pre&gt;
+
+  &lt;script type="module"&gt;
+    import { transform } from "https://cdn.jsdelivr.net/gh/keshavsoft/node-json-transformer@main/src/index.js";
+
+    const data = {
+      CUSTOMER_NAME: "Keshav",
+      TRANSACTION_DATE: "2026-09-30",
+      STATUS: "ACTIVE"
+    };
+
+    const result = transform(data, {
+      item: {
+        customer_name: "CUSTOMER_NAME",
+        transaction_date: "TRANSACTION_DATE"
+      }
+    });
+
+    document.getElementById("outputView").textContent = JSON.stringify(result, null, 2);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+      </div>
+    </section>
+
+    <!-- Section 3: Live In-Browser Execution Sandbox -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">⚡</div>
+        <div>
+          <div class="section-title">3. Live In-Browser Test Runner</div>
+          <div class="section-desc">Executes the exact <code>node-json-transformer</code> code from the card right here in real time:</div>
+        </div>
+      </div>
+
+      <div class="sandbox-box">
+        <div class="sandbox-toolbar">
+          <span style="font-size: 0.88rem; font-weight: 700; color: #ffffff;">
+            Live code: <code>transform(data, { item: { customer_name, transaction_date } })</code>
+          </span>
+          <button class="btn-run-live" id="btnRunCardExample">
+            <span>⚡</span> Run Code Live
+          </button>
+        </div>
+        <pre class="output-preview" id="liveCardOutput">// Click "Run Code Live" above to execute node-json-transformer...</pre>
+      </div>
+    </section>
+
+    <!-- Section 4: Node.js / NPM Usage -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <div>
+          <div class="section-title">4. Node.js &amp; NPM Package Usage</div>
+          <div class="section-desc">For backend services, CLI utilities, and Node.js microservices.</div>
+        </div>
+      </div>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-title">Terminal &mdash; Install Package</span>
+          <button class="btn-copy" onclick="copySnippet('codeNpmInstall', this)">📋 Copy Command</button>
+        </div>
+        <pre class="code-block" id="codeNpmInstall">npm install node-json-transformer</pre>
+      </div>
+
+      <!-- CommonJS Example -->
+      <div class="code-container" style="margin-top: 1rem;">
+        <div class="code-header">
+          <span class="code-title">JavaScript &mdash; CommonJS (require)</span>
+          <button class="btn-copy" onclick="copySnippet('codeCommonJs', this)">📋 Copy Code</button>
+        </div>
+        <pre class="code-block" id="codeCommonJs">const { transform } = require("node-json-transformer");
+
+const data = {
+  CUSTOMER_NAME: "Keshav",
+  TRANSACTION_DATE: "2026-09-30"
+};
+
+const result = transform(data, {
+  item: {
+    customer_name: "CUSTOMER_NAME",
+    transaction_date: "TRANSACTION_DATE"
+  }
+});
+
+console.log(result);
+// Output: { customer_name: "Keshav", transaction_date: "2026-09-30" }</pre>
+      </div>
+
+      <!-- ES Module Example -->
+      <div class="code-container" style="margin-top: 1rem;">
+        <div class="code-header">
+          <span class="code-title">JavaScript &mdash; Modern ES Modules (import)</span>
+          <button class="btn-copy" onclick="copySnippet('codeEsm', this)">📋 Copy Code</button>
+        </div>
+        <pre class="code-block" id="codeEsm">import { transform } from "node-json-transformer";
+
+const data = {
+  CUSTOMER_NAME: "Keshav",
+  TRANSACTION_DATE: "2026-09-30"
+};
+
+const result = transform(data, {
+  item: {
+    customer_name: "CUSTOMER_NAME",
+    transaction_date: "TRANSACTION_DATE"
+  }
+});
+
+console.log(result);</pre>
+      </div>
+    </section>
+
+    <!-- CTA to Workbench -->
+    <div class="cta-banner">
+      <h2>Test Complex Recipes &amp; Sub-Arrays</h2>
+      <p>
+        Use the live interactive workbench to test real enterprise invoices, orders, dot-notation resolution, and inspect drilldown DOM tables.
+      </p>
+      <a href="workbench.html" class="btn-workbench" style="font-size: 1rem; padding: 0.75rem 1.6rem;">
+        <span>🚀</span> Open Full Workbench (workbench.html)
+      </a>
+    </div>
+
+    <footer>
+      node-json-transformer &mdash; Unified Declarative JSON Transformation Engine.
+    </footer>
+
+  </div>
+
+  <!-- Interactive Logic & Live Runner -->
+  <script type="module">
+    // Direct import of node-json-transformer engine
+    import { transform } from "./../src/index.js";
+
+    // Copy to clipboard helper
+    window.copySnippet = function(elementId, btn) {
+      const codeElement = document.getElementById(elementId);
+      if (!codeElement) return;
+
+      const text = codeElement.innerText || codeElement.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "✓ Copied!";
+        btn.classList.add("copied");
+
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove("copied");
+        }, 2000);
+      }).catch(err => {
+        alert("Copy failed: " + err);
+      });
+    };
+
+    // Live Execution of the Card Code Snippet
+    document.getElementById("btnRunCardExample").addEventListener("click", () => {
+      const data = {
+        CUSTOMER_NAME: "Keshav",
+        TRANSACTION_DATE: "2026-09-30",
+        EXTRA_LEGACY_FIELD: "IGNORED"
+      };
+
+      try {
+        const result = transform(data, {
+          item: {
+            customer_name: "CUSTOMER_NAME",
+            transaction_date: "TRANSACTION_DATE"
+          }
+        });
+
+        document.getElementById("liveCardOutput").textContent = 
+          "// Output from node-json-transformer:\n" + JSON.stringify(result, null, 2);
+      } catch (err) {
+        document.getElementById("liveCardOutput").textContent = "Error: " + err.message;
+      }
+    });
+  </script>
+</body>
+</html>

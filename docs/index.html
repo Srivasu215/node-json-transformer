@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works — Node Transformer Architecture &amp; Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #070a12;
+      --card-bg: rgba(16, 24, 40, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --accent-green: #34d399;
+      --accent-purple: #818cf8;
+      --accent-amber: #fbbf24;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --code-bg: #030712;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 1.25rem;
+      background-image:
+        radial-gradient(ellipse 90% 50% at 50% -10%, rgba(56, 189, 248, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(129, 140, 248, 0.07), transparent),
+        radial-gradient(ellipse 60% 40% at 0% 80%, rgba(52, 211, 153, 0.07), transparent);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Top Nav Bar */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .nav-badge {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-workbench {
+      background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
+      color: #04101e;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: 0 0 16px var(--accent-glow);
+      transition: all 0.2s ease;
+    }
+
+    .btn-workbench:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-github {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.48rem 0.95rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-github:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--accent);
+    }
+
+    /* Hero */
+    header.hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto 1.5rem auto;
+      line-height: 1.6;
+    }
+
+    /* Cards */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.75rem;
+      backdrop-filter: blur(16px);
+      transition: border-color 0.2s ease;
+    }
+
+    .section-card:hover {
+      border-color: rgba(56, 189, 248, 0.25);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-icon {
+      font-size: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Mental Model Flow */
+    .pipeline-diagram {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 1rem;
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 850px) {
+      .pipeline-diagram {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .diagram-arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    .diagram-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .diagram-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+    }
+
+    .diagram-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.35rem;
+    }
+
+    .diagram-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .diagram-arrow {
+      font-size: 1.5rem;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    /* Grid for Architecture Steps */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .step-item {
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.1rem;
+      position: relative;
+    }
+
+    .step-num {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(56, 189, 248, 0.12);
+      border-radius: 6px;
+      padding: 0.15rem 0.45rem;
+    }
+
+    .step-item-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.4rem;
+    }
+
+    .step-item-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Code Display Grid */
+    .code-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .code-comparison {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .code-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .code-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #e2e8f0;
+    }
+
+    pre.code-block {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      flex: 1;
+      line-height: 1.5;
+    }
+
+    .k-blue { color: #38bdf8; }
+    .k-purple { color: #c084fc; }
+    .k-green { color: #34d399; }
+    .k-amber { color: #fbbf24; }
+
+    /* CTA Section */
+    .cta-card {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(129, 140, 248, 0.12) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 2.5rem 1.5rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .cta-card h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-card p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto 1.5rem auto;
+    }
+
+    .btn-large-test {
+      background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
+      color: #04101e;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 0.8rem 2rem;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 0 25px var(--accent-glow);
+      transition: all 0.2s ease;
+    }
+
+    .btn-large-test:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.5);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <a href="index.html" class="nav-brand">
+        <span>🔮</span> Node Transformer
+        <span class="nav-badge">Architecture &amp; Docs</span>
+      </a>
+      <div class="nav-actions">
+        <a href="cdn.html" class="btn-github" style="color: var(--accent); border-color: rgba(56, 189, 248, 0.3);">
+          <span>📦</span> CDN Guide
+        </a>
+        <a href="workbench.html" class="btn-workbench" title="Open the Live Browser Workbench">
+          <span>🚀</span> Test Code in Workbench
+        </a>
+        <a href="https://github.com/keshavsoft/node-json-transformer" target="_blank" class="btn-github">
+          <span>📂</span> GitHub
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+      <h1>How Node Transformer Works</h1>
+      <p class="hero-subtitle">
+        A single-pass recursive engine that separates data from output structure. It takes any raw JSON or XML-derived payload, resolves dotted paths, renames keys, and builds clean schema contracts declaratively.
+      </p>
+      <div>
+        <a href="workbench.html" class="btn-workbench" style="font-size: 0.95rem; padding: 0.65rem 1.4rem;">
+          <span>🚀</span> Go to Live Workbench &amp; Test Code
+        </a>
+      </div>
+    </header>
+
+    <!-- Core Mental Model -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">🧩</div>
+        <div>
+          <div class="section-title">The Two-Document Model</div>
+          <div class="section-desc">The core architectural concept behind node-json-transformer.</div>
+        </div>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem;">
+        Instead of writing imperative transformation logic (loops, nested checks, property assignments), Node Transformer evaluates two documents: the <strong>Source Data</strong> and the <strong>Transformation Recipe</strong>. The recipe describes the exact output shape you want to construct.
+      </p>
+
+      <div class="pipeline-diagram">
+        <div class="diagram-box">
+          <div class="diagram-tag" style="color: #38bdf8;">Document 1</div>
+          <div class="diagram-title">Source JSON</div>
+          <div class="diagram-desc">Raw input payload with enterprise, legacy, or XML-like keys (e.g. dotted keys, arbitrary nesting).</div>
+        </div>
+
+        <div class="diagram-arrow">➔</div>
+
+        <div class="diagram-box">
+          <div class="diagram-tag" style="color: #c084fc;">Document 2</div>
+          <div class="diagram-title">Transformation Recipe</div>
+          <div class="diagram-desc">Declarative contract. Output keys belong to the recipe; values specify source path instructions.</div>
+        </div>
+
+        <div class="diagram-arrow">➔</div>
+
+        <div class="diagram-box">
+          <div class="diagram-tag" style="color: #34d399;">Result</div>
+          <div class="diagram-title">Transformed Output</div>
+          <div class="diagram-desc">Clean, normalized contract ready for APIs, databases, or UI table visualization.</div>
+        </div>
+      </div>
+
+      <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.88rem; color: #bae6fd;">
+        💡 <strong>Key Principle:</strong> Output keys belong entirely to the transformation recipe. The source is only queried when a value needs to be retrieved.
+      </div>
+    </section>
+
+    <!-- Execution Lifecycle -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <div>
+          <div class="section-title">Execution Pipeline &amp; Traversal Engine</div>
+          <div class="section-desc">How the recursive engine processes transformations in a single pass.</div>
+        </div>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-item">
+          <span class="step-num">01</span>
+          <div class="step-item-title">Entry &amp; Context</div>
+          <div class="step-item-desc">
+            <code>transform(source, recipe)</code> initializes traversal with root references, configuration, and source payload.
+          </div>
+        </div>
+
+        <div class="step-item">
+          <span class="step-num">02</span>
+          <div class="step-item-title">Dispatch Decision</div>
+          <div class="step-item-desc">
+            The dispatcher identifies whether the current recipe node represents an <code>item</code> (object), a <code>list</code> (array), or a <code>flat</code> selection.
+          </div>
+        </div>
+
+        <div class="step-item">
+          <span class="step-num">03</span>
+          <div class="step-item-title">Path Resolution</div>
+          <div class="step-item-desc">
+            Handles nested dot-notation (<code>"customer.address.city"</code>) and legacy dotted XML keys without throwing undefined errors.
+          </div>
+        </div>
+
+        <div class="step-item">
+          <span class="step-num">04</span>
+          <div class="step-item-title">Recursive Composition</div>
+          <div class="step-item-desc">
+            The same rules repeat seamlessly: <code>Object ➔ Array ➔ Object ➔ Array</code> without needing custom loop logic.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Code Example Comparison -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-icon">💻</div>
+        <div>
+          <div class="section-title">See It in Action</div>
+          <div class="section-desc">A side-by-side demonstration of input, recipe, and resulting output.</div>
+        </div>
+      </div>
+
+      <div class="code-comparison">
+        <div class="code-col">
+          <div class="code-label">
+            <span class="k-blue">📄</span> 1. Raw Source Data
+          </div>
+          <pre class="code-block">{
+  <span class="k-purple">"ORDER_HEADER"</span>: {
+    <span class="k-purple">"VOUCHER_NO"</span>: <span class="k-green">"INV-2026-09"</span>,
+    <span class="k-purple">"PARTY_NAME"</span>: <span class="k-green">"Keshav Enterprises"</span>
+  },
+  <span class="k-purple">"ITEM_LIST"</span>: [
+    {
+      <span class="k-purple">"ITEM_NAME"</span>: <span class="k-green">"Widget Alpha"</span>,
+      <span class="k-purple">"QTY"</span>: <span class="k-amber">10</span>,
+      <span class="k-purple">"RATE"</span>: <span class="k-amber">150</span>
+    }
+  ]
+}</pre>
+        </div>
+
+        <div class="code-col">
+          <div class="code-label">
+            <span class="k-purple">📜</span> 2. Transformation Recipe
+          </div>
+          <pre class="code-block">{
+  <span class="k-purple">"item"</span>: {
+    <span class="k-blue">"invoiceNumber"</span>: <span class="k-green">"ORDER_HEADER.VOUCHER_NO"</span>,
+    <span class="k-blue">"client"</span>: <span class="k-green">"ORDER_HEADER.PARTY_NAME"</span>,
+    <span class="k-blue">"products"</span>: [
+      {
+        <span class="k-purple">"list"</span>: <span class="k-green">"ITEM_LIST"</span>,
+        <span class="k-purple">"item"</span>: {
+          <span class="k-blue">"product"</span>: <span class="k-green">"ITEM_NAME"</span>,
+          <span class="k-blue">"quantity"</span>: <span class="k-green">"QTY"</span>,
+          <span class="k-blue">"price"</span>: <span class="k-green">"RATE"</span>
+        }
+      }
+    ]
+  }
+}</pre>
+        </div>
+
+        <div class="code-col">
+          <div class="code-label">
+            <span class="k-green">✨</span> 3. Clean Output Contract
+          </div>
+          <pre class="code-block">{
+  <span class="k-blue">"invoiceNumber"</span>: <span class="k-green">"INV-2026-09"</span>,
+  <span class="k-blue">"client"</span>: <span class="k-green">"Keshav Enterprises"</span>,
+  <span class="k-blue">"products"</span>: [
+    {
+      <span class="k-blue">"product"</span>: <span class="k-green">"Widget Alpha"</span>,
+      <span class="k-blue">"quantity"</span>: <span class="k-amber">10</span>,
+      <span class="k-blue">"price"</span>: <span class="k-amber">150</span>
+    }
+  ]
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to action: Test Code in workbench.html -->
+    <section class="cta-card">
+      <h2>Ready to test your own JSON transformations?</h2>
+      <p>
+        Open the live interactive workbench to paste raw JSON, edit transformation recipes in real time, view instant outputs, and render drilldown tables.
+      </p>
+      <a href="workbench.html" class="btn-large-test" id="btnGoToWorkbench">
+        <span>🚀</span> Open Interactive Workbench (workbench.html)
+      </a>
+    </section>
+
+    <footer>
+      Node Transformer — Powered by <a href="https://github.com/keshavsoft/node-json-transformer" target="_blank" style="color: var(--accent); text-decoration: none;">node-json-transformer</a> &amp; KeshavSoft.
+    </footer>
+
+  </div>
+
+</body>
+</html>
