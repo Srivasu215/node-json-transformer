@@ -11,9 +11,9 @@
         "item": {
           "tagName": "$option",
           "attributes": {
-            "value": ""
+            "value": "${}"
           },
-          "textContent": ""
+          "textContent": "${}"
         }
       }
     ]
